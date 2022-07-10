@@ -106,8 +106,7 @@ for resource in rs:
 
 topics = list(website.keys())
 topics.sort()
-order = [1,2,3,4,5,0]
-topics = [topics[i] for i in order]
+topics = [topics[i+1] for i in range(len(topics)-1)]+[topics[0]]
 
 for currenttopic in topics:
 	currentsource = copy(source)
