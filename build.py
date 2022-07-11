@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from copy import copy, deepcopy
 from os import listdir, mkdir
 from os.path import isdir, isfile, join
