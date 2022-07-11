@@ -18,7 +18,6 @@ with open(template_path+"footer.html", "r") as f:
     footer = f.readlines()
 footer = "".join(footer)
 
-menu = "	<a href='//heimersheim.eu/'><b>heimersheim.eu</b></a>"
 
 
 website = {
@@ -114,7 +113,6 @@ for currenttopic in topics:
 	currentsource = copy(source)
 	menu = ""
 	for topic in topics:
-		#topiclink = "https://heimersheim.eu/"+website[topic]['url']
 		topiclink = "./"+website[topic]['url']+'.html'
 		if topic == currenttopic:
 			menu+="	<a href='{0:}' title='{1:}'><b>{2:}</b></a>\n".format(topiclink, topic, topic)
