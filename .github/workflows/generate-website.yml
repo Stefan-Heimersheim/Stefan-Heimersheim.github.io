@@ -1,4 +1,4 @@
-name: generate-website
+name: github-actions-helloworld
 on: [push]
 jobs:
   build:
