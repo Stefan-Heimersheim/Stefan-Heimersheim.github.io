@@ -6,4 +6,4 @@ The build is automated using GitHub Actions, the corresponding configuration can
 
 If you want to do something like this yourself but have some questions feel free to drop me a line!
 
-_Last build: 2022-07-11T18:35:46 BST_
+_Last build: Mon Jul 11 17:39:24 UTC 2022_
