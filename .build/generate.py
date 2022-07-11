@@ -4,7 +4,7 @@ from os.path import isdir, isfile, join
 from shutil import copyfile, copy2
 
 
-output_path = "../"
+output_path = "../docs/"
 content_path = "../.content/"
 resource_path = "resources/"
 
