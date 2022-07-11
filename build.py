@@ -4,15 +4,16 @@ from os.path import isdir, isfile, join
 from shutil import copyfile, copy2
 
 
-output_path = "../docs/"
-content_path = "../content/"
+output_path = "docs/"
+content_path = "content/"
+template_path = "content/"
 resource_path = "resources/"
 
-with open("template_main.html", "r") as f:
-    main = f.readlines()
-source = "".join(main)
+with open(template_path+"header.html", "r") as f:
+    header = f.readlines()
+source = "".join(header)
 
-with open("template_footer.html", "r") as f:
+with open(template_path+"footer.html", "r") as f:
     footer = f.readlines()
 footer = "".join(footer)
 

@@ -6,15 +6,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        persist-credentials: true # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
     - name: Create local changes
       run: |
-        cd build/; echo $(date) > last_build.txt; python3 generate.py
-#        ls; ls .github; touch "hellow_world3"; touch $(python --version)
-#    - name: Run build script
-#      run: scripts/build.sh
-#      shell: bash
+        sed -i '/_Last build:/d' README.md
+        echo "_Last build: $(date)_" >> README.md
+        python3 generate.py
     - name: Commit files
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"

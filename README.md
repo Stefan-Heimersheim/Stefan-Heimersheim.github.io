@@ -5,3 +5,5 @@ the `build/` directory contains the script I use to build the website files from
 The build is automated using GitHub Actions, the corresponding configuration can be found in `.github/workflows/`.
 
 If you want to do something like this yourself but have some questions feel free to drop me a line!
+
+_Last build: 2022-07-11T18:35:46 BST_
