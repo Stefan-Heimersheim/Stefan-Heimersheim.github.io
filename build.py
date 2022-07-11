@@ -6,7 +6,7 @@ from shutil import copyfile, copy2
 
 output_path = "docs/"
 content_path = "content/"
-template_path = "content/"
+template_path = "templates/"
 resource_path = "resources/"
 
 with open(template_path+"header.html", "r") as f:
