@@ -122,7 +122,9 @@ for currenttopic in topics:
 			menu+="	<a href='{0:}' title='{1:}'>{2:}</a>\n".format(topiclink, topic, topic)
 	currentcontent = ""
 	nav = ""
-	for item in website[currenttopic]['content']:
+	items = website[currenttopic]['content']
+	items.sort()
+	for item in items:
 		tag = item[:-5] #.html
 		title = "Hello, world!" if tag=="about" else tag.capitalize()
 		nav += "		<li><a href='#{0:}'>{1:}</a></li>\n".format(tag, title)
