@@ -9,6 +9,7 @@ jobs:
         fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
     - name: Create local changes
       run: |
+        git pull
         sed -i '/_Last build:/d' README.md
         echo "_Last build: $(date)_" >> README.md
         python3 build.py
