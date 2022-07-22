@@ -9,7 +9,7 @@
 <div id="header">
 	<a id="headername" href="/"> Stefan Heimersheim </a>
 	<span class="hidden"> - </span>
-	<span id="headerquote"> </span>
+	<span id="headermirrors"> Links: <a href="https://github.com/Stefan-Heimersheim">GitHub</a></span>
 </div>
 <hr class="hidden"/>
 <div id="menu">
@@ -23,15 +23,186 @@
 <div id="content">
 	<div id="nav">
 		<ul>
-				<li><a href='#CNN Feature Vizualization'>Cnn feature vizualization</a></li>
-		<li><a href='#Evaluating Planck Likelihoods'>Evaluating planck likelihoods</a></li>
+				<li><a href='#Essence of the sea_cucumber'>Essence of the sea_cucumber</a></li>
+		<li><a href='#Feature Vizualization'>Feature vizualization</a></li>
+		<li><a href='#Planck CMB Likelihoods'>Planck cmb likelihoods</a></li>
 		</ul>
 	</div>
 <hr class="hidden"/>
 <div id="main">
 <article>
-<a href='#CNN Feature Vizualization'><h1 id='CNN Feature Vizualization'>Cnn feature vizualization</h1></a>
-<p>[<em>My project for <a href="https://www.eacambridge.org/technical-alignment-curriculum">AGI Safety Fundamentals programme</a> (~Oct 2021). Code &amp; pictures below. Cross-posted <a href="https://www.lesswrong.com/posts/raRSW3e9iYMwkqjBX/cnn-feature-visualization-in-50-lines-of-code">here</a>.</em>]</p>
+<a href='#Essence of the sea_cucumber'><h1 id='Essence of the sea_cucumber'>Essence of the sea_cucumber</h1></a>
+<p><a href="https://github.com/Stefan-Heimersheim/sea_cucumber_essence">[GitHub link]</a></p>
+<p>Experiments with CNN features and circuits. 
+In short, why does this (maximized node <code>4</code> in the <code>block5_conv4</code> layer of <code>VGG19</code>)</p>
+
+<p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/node4.png?raw=true" alt="node4" width=224 class="center"/></p>
+
+<p>look like <code>sea_cucumber</code> to all ImageNet-trained CNNs?</p>
+
+<p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true" alt="tSNE" width=90% class="center"/></p>
+
+<h2 id="context">Context</h2>
+
+<p><a href="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/README.md#investigation">[Skip to Investigation]</a></p>
+
+<p>Using my <a href="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/">feature extraction</a> script I analyzed 
+node <code>4</code> in the <code>block5_conv4</code> layer of <code>VGG19</code>:</p>
+
+<pre><code class="python language-python">import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from tensorflow.keras.preprocessing import image
+from PIL import Image 
+</code></pre>
+
+<pre><code class="python language-python">base_model = tf.keras.applications.VGG19(include_top=False, weights='imagenet')
+target_layer="block5_conv4"
+target_index=4
+steps=100
+step_size=0.1
+# Take the network and cut it off at the layer we want to analyze,
+# i.e. we only need the part from the input to the target_layer.
+target = [base_model.get_layer(target_layer).output]
+part_model = tf.keras.Model(inputs=base_model.input, outputs=target)
+</code></pre>
+
+<pre><code class="python language-python"># The next part is the function to maximize the target layer/node by
+# adjusting the input, equivalent to the usual gradient descent but
+# gradient ascent. Run an optimization loop:
+activation = None
+@tf.function(
+    # Decorator to increase the speed of the gradient_ascent function
+    input_signature=(
+      tf.TensorSpec(shape=[None,None,3], dtype=tf.float32),
+      tf.TensorSpec(shape=[], dtype=tf.int32),
+      tf.TensorSpec(shape=[], dtype=tf.float32),)
+)
+def gradient_ascent(img, steps, step_size):
+    loss = tf.constant(0.0)
+    for n in tf.range(steps):
+        # As in normal NN training, you want to record the computation
+        # of the forward-pass (the part_model call below) to compute the
+        # gradient afterwards. This is what tf.GradientTape does.
+        with tf.GradientTape() as tape:
+            tape.watch(img)
+            # Forward-pass (compute the activation given our image)
+            activation = part_model(tf.expand_dims(img, axis=0))
+            print(activation)
+            print(np.shape(activation))
+            # The activation will be of shape (1,N,N,L) where N is related to
+            # the resolution of the input image (assuming our target layer is
+            # a convolutional filter), and L is the size of the layer. E.g. for a
+            # 256x256 image in "block4_conv1" of VGG19, this will be
+            # (1,32,32,512) -- we select one of the 512 nodes (index) and
+            # average over the rest (you can average selectively to affect
+            # only part of the image but there's not really a point):
+            loss = tf.math.reduce_mean(activation[:,:,:,target_index])
+
+        # Get the gradient, i.e. derivative of "loss" with respect to input
+        # and normalize.
+        gradients = tape.gradient(loss, img)
+        gradients /= tf.math.reduce_std(gradients)
+
+        # In the final step move the image in the direction of the gradient to
+# increate the "loss" (our targeted activation). Note that the sign here
+# is opposite to the typical gradient descent (our "loss" is the target 
+# activation which we maximize, not something we minimize).
+        img = img + gradients*step_size
+        img = tf.clip_by_value(img, -1, 1)
+    return loss, img
+</code></pre>
+
+<pre><code class="python language-python"># Preprocessing of the image (converts from [0..255] to [-1..1]
+starting_img = np.random.randint(low=0,high=255,size=(224,224,3), dtype=np.uint8)
+img = tf.keras.applications.vgg19.preprocess_input(starting_img)
+img = tf.convert_to_tensor(img)
+# Run the gradient ascent loop
+loss, img = gradient_ascent(img, tf.constant(steps), tf.constant(step_size))
+# Convert back to [0..255] and return the new image
+img = tf.cast(255*(img + 1.0)/2.0, tf.uint8)
+plt.imshow(np.array(img))
+im = Image.fromarray(np.array(img))
+im.save("node4.png")
+</code></pre>
+
+<h2 id="theconfusingpart">The confusing part</h2>
+
+<p>Judging my the <a href="https://microscope.openai.com/models/vgg19_caffe/conv5_4_conv5_4_0/4">OpenAI Microscope</a> it looks like the node mostly gets activated by furry animals -- <em>in the training set</em>. Of course our image in artificial and this far outside the usual distribution, and we can expect such different behaviour. But why do we get the <code>sea_cucumber</code> prediction, rather than predictions of <code>dog</code>, <code>bison</code> or <code>lion</code>?</p>
+
+<p>Feeding this image into the network, it seems insanely sure that the right label is <code>sea_cucumber</code>. Also other imagenet-trained networks such as Inception or VGG16 give the same result. Note: This was not indended and not optimized for.</p>
+
+<pre><code class="python language-python">model_vgg19 = tf.keras.applications.VGG19(weights='imagenet', include_top=True)
+x = tf.keras.applications.vgg19.preprocess_input(np.expand_dims(img, axis=0))
+predictions = model_vgg19.predict(x)
+print('Predicted:', tf.keras.applications.vgg19.decode_predictions(predictions, top=3)[0])
+</code></pre>
+
+<pre><code>Predicted: [('n02321529', 'sea_cucumber', 1.0), ('n01924916', 'flatworm', 1.2730256e-33), ('n01981276', 'king_crab', 2.537045e-37)]
+</code></pre>
+
+<pre><code class="python language-python">model_vgg16 = tf.keras.applications.VGG16(weights='imagenet', include_top=True)
+x = tf.keras.applications.vgg16.preprocess_input(np.expand_dims(img, axis=0))
+predictions = model_vgg16.predict(x)
+print('Predicted:', tf.keras.applications.vgg16.decode_predictions(predictions, top=3)[0])
+</code></pre>
+
+<pre><code>Predicted: [('n02321529', 'sea_cucumber', 1.0), ('n01950731', 'sea_slug', 4.6657154e-15), ('n01924916', 'flatworm', 1.810621e-15)]
+</code></pre>
+
+<pre><code class="python language-python">model_resnet = tf.keras.applications.ResNet50(weights='imagenet', include_top=True)
+x = tf.keras.applications.resnet.preprocess_input(np.expand_dims(img, axis=0))
+predictions = model_resnet.predict(x)
+print('Predicted:', tf.keras.applications.resnet.decode_predictions(predictions, top=3)[0])
+</code></pre>
+
+<pre><code>Predicted: [('n02321529', 'sea_cucumber', 0.9790509), ('n12144580', 'corn', 0.00899157), ('n13133613', 'ear', 0.005869923)]
+</code></pre>
+
+<p>Even this online service (<a href="https://www.snaplogic.com/machine-learning-showcase/image-recognition-inception-v3">snaplogic using Inception</a>) mistakes a picture of my phone screen showing the image:
+<img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/recognize.png?raw=true" alt="recognize" width=80% class="center"/></p>
+
+<h2 id="investigation">Investigation</h2>
+
+<p>Let's look at the activations, after feeding the image into the VGG19 network I have been using:</p>
+
+<pre><code class="python language-python">target = [model_vgg19.get_layer("block5_conv4").output]
+model_vgg19_cutoff = tf.keras.Model(inputs=model_vgg19.input, outputs=target)
+x = tf.keras.applications.vgg19.preprocess_input(np.expand_dims(img, axis=0))
+activations = model_vgg19_cutoff.predict(x)
+plt.plot(np.mean(np.mean(np.mean(activations, axis=0), axis=0), axis=0))
+</code></pre>
+
+<p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activations.png?raw=true" width=100% class="center" />
+So the question we're asking, is this the typical pattern for a dog or bison? Or maybe closer to the <code>sea_cucumber</code> pattern, in this 512-dimensional space?</p>
+
+<p>Let's have a look at the <code>groenendael</code> (1st image in Microscope) and <code>sea_cucumber</code> classes, as well as a few randomly selected ones. I downloaded the imagenet data and used <a href="https://image-net.org/challenges/LSVRC/2017/browse-synsets.php">this list</a> to find the right files.
+<img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/groenendael.png?raw=true" width=100% class="center" />
+Hmm I don't really see a pattern by eye here, nor a similarity to above / excitation in index 4. In hindsight this makes sense, we wouldn't expect the category to be simply 1-hot encoded in activation space, because a) there is not enough room, and b) there are more layers following so I would rather think of some clusters in the high dimensional activation space. Let's maybe look some summary statistic, like the absolute distance in this 512-dim vector space.</p>
+
+<p>So I take the training images, feed them into the network and read of the activations of the 512 nodes in the layer we are looking at (averaged over the 14x14 locations). Then I compute the distance as absolute distance between the vectors, 512-dimenisonal L2 norm.
+The image below shows the distance between the optimized "sea_cucumber essence" image and the activations of <code>sea_cucumber</code> training data (green), <code>groenendael</code> (blue), and a mix of 10 random classes (100 random images each). The blue curve shows the average activation-distance between randomly selected images of different classes. The code for all the following plots can be found in <code>code_distances.py</code>.
+<img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_node4maximized.png?raw=true" alt="distances" width=100% class="center"/></p>
+
+<p>For context, here is the average distance between randomly selected images (grey), images from the same class (red) and images from different classes (blue):
+<img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_general.png?raw=true" width=60% class="center" />
+We learn three main things here:</p>
+
+<ol>
+<li>Generally images of the same class seem to be nearer to each other in this 512-dim space than random / different classes, but the effect is not very strong. Of course we wouldn't expect that the distance is the best measure of "closeness" between activations.</li>
+
+<li>These numbers are all waaaay smaller than the ~7k and 36k we get from the "sea_cucumber essence" image. This tells us (somewhat unsurprisingly) that that optimized image is far outside the training distribution in at least this measure.</li>
+
+<li>The <code>sea_cucumber</code> training data seems to give activations <em>slightly</em> closer to the "sea_cucumber essence" image -- so maybe it's just far outside the distribution but into the <code>sea_cucumber</code> direction?</li>
+</ol>
+
+<p>Naturally the L2-distance isn't the ideal way to reduce the 512-d space into something plot-able. One method I found is <a href="https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html">t-SNE</a> which projects the 512-dimensions into two parameters which we can plot:
+<img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true" width=100% class="center" />
+Looks like we get a nice separation (t-SNE does not know the labels) of different categories, and the "sea_cucumber essence" activations tend to lie within the <code>sea_cucumber</code> training data!</p>
+
+<p>This doesn't definitely answer the question, but I think it's clear that this node4-maximized image ends up in a corner of parameter space which, even though it is "far away" (L2 distance), lies in a region that is clearly near the region that <code>sea_cucumber</code> training images lie in. Presented with this out-of-distribution image, and tasked with choosing between only the existing categories, the network decides for <code>sea_cucumber</code>.</p>
+<a href='#Feature Vizualization'><h1 id='Feature Vizualization'>Feature vizualization</h1></a>
+<p>[<em>My project for <a href="https://www.eacambridge.org/technical-alignment-curriculum">AGI Safety Fundamentals programme</a> (~Oct 2021). Code &amp; pictures below. Cross-posted on <a href="https://www.lesswrong.com/posts/raRSW3e9iYMwkqjBX/cnn-feature-visualization-in-50-lines-of-code">LessWrong</a>.</em>]</p>
 <p>To me, reading about <a href="https://distill.pub/2020/circuits/zoom-in/">Feature Visualization</a> felt like one of the most revealing insights about CNNs in the last years. Seeing the idea &quot;this node finds eyes, this node finds mouths, the combination detects faces&quot; (oversimplified) actually implemented by the CNN was a pleasant surprise, as in, it suggests we might actually understand how NNs work. There&#39;s more reading on the <a href="https://www.eacambridge.org/agi-week-6">programme website here</a>, I can highly recommend the articles by <a href="https://distill.pub/2020/circuits/">Chris Olah&#39;s group on distill</a>.</p>
 <p>Seeing this I think many of us immediately want to try this, and play around with it. There is of course the OpenAI <a href="https://microscope.openai.com/models">Microscope</a> to look at results, and the <a href="https://github.com/tensorflow/lucid">Lucid</a> library, but I wanted to actually reproduce the idea myself without relying on a somewhat black box (big library / OpenAI Microscope).</p>
 <p>Almost all tutorials I found however used Lucid, and this really cool write-up <a href="https://towardsdatascience.com/how-to-visualize-convolutional-features-in-40-lines-of-code-70b7d87b0030">&quot;How to visualize convolutional features in 40 lines of code&quot;</a> unfortunately starts with <code>from fastai.conv_learner import *</code>. In retrospective I think I could understand this now, but I didn&#39;t, and finding out which parts were fastai functions and what they do was rather tricky. I also didn&#39;t manage to install the required (older) version of fastai.</p>
@@ -131,7 +302,7 @@ plt.imshow(np.array(optimized_img))
 <p>Feel free to post a comment or send me a message if you have any questions or anything really, happy to chat about these things!</p>
 <p><em>I just want to thank the organizers of the AGI Safety Fundamentals programme again, for setting up the programme and all their support. I can highly recommend the programme, as well as the well-curated curriculum <a href="https://www.eacambridge.org/technical-alignment-curriculum">here</a> if you just want to read through it yourself.</em> </p>
 
-<a href='#Evaluating Planck Likelihoods'><h1 id='Evaluating Planck Likelihoods'>Evaluating planck likelihoods</h1></a>
+<a href='#Planck CMB Likelihoods'><h1 id='Planck CMB Likelihoods'>Planck cmb likelihoods</h1></a>
 <p>The <a href="https://en.wikipedia.org/wiki/Planck_(spacecraft)">Planck spacecraft</a> is a satellite built to measure the Cosmic Microwave Background, the microwave radiation reaching us from the edge of the observable universe. Its goal is to detect tiny fluctuations (on the scale of 1 part in 100,000) of this radiation from different directions.
 <br>
 We use these observations to compare out theoretical models to reality. But because those fluctuations are based on randomness (quantum fluctuations in the early universe) we cannot predict the actual pattern on the sky. What we can predict, and test, are certain statistical properties. Most commonly we use the <i>multipoles</i> (usually referred to as the power spectrum) -- what are those? They describe how correlated or different the radiation in directions looks, e.g. <i>dipole</i> relating to the correlation of opposite directions. Another way to think of this is the correlation of two directions at a certain (angular) distance. The dipole describes correlation of points 180 degrees apart, quadrupole 90 degrees etc. The 180th moment describes points separated by an angle of just 1 degree and this turns out to be the "strongest" correlation. In simple terms, we could say the circumstances in the early universe allowed matter and energy to travel such that spots about 40 million light years apart were very correlated.
