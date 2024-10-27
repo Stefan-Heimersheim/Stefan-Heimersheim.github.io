@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Using Secure Boot and TPM 2.0">
+<title>Fingerprint-based full-disk encryption on linux</title>
+
+<link rel='canonical' href='http://localhost:1313/post/fingerprint-unlock-encryption/'>
+
+<link rel="stylesheet" href="/scss/style.min.f281ffb5054b6017cc01f0cdf4feb55cb5dea6541d2978295fb70624bd3fb79c.css"><meta property='og:title' content="Fingerprint-based full-disk encryption on linux">
+<meta property='og:description' content="Using Secure Boot and TPM 2.0">
+<meta property='og:url' content='http://localhost:1313/post/fingerprint-unlock-encryption/'>
+<meta property='og:site_name' content='Stefan Heimersheim'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2021-08-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2021-08-30T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/fingerprint-unlock-encryption/cover.png' />
+<meta name="twitter:title" content="Fingerprint-based full-disk encryption on linux">
+<meta name="twitter:description" content="Using Secure Boot and TPM 2.0"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/fingerprint-unlock-encryption/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu12628761305366239463.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Stefan Heimersheim</a></h1>
+            <h2 class="site-description">Mechanistic Interpretability @ Apollo Research.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:stefan@heimersheim.eu'
+                        target="_blank"
+                        title="Email"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Stefan-Heimersheim/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.lesswrong.com/users/stefan42'
+                        target="_blank"
+                        title="LessWrong"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-north-star"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h18" /><path d="M12 21v-18" /><path d="M7.5 7.5l9 9" /><path d="M7.5 16.5l9 -9" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/sheimersheim'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/fingerprint-unlock-encryption/">
+                <img src="/post/fingerprint-unlock-encryption/cover_hu11545459227959821305.png"
+                        srcset="/post/fingerprint-unlock-encryption/cover_hu11545459227959821305.png 800w, /post/fingerprint-unlock-encryption/cover_hu15674473525652178067.png 1600w"
+                        width="800" 
+                        height="418" 
+                        loading="lazy"
+                        alt="Featured image of post Fingerprint-based full-disk encryption on linux" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/tutorial/" style="background-color: #4a9d4f; color: #fff;">
+                Tutorial
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/fingerprint-unlock-encryption/">Fingerprint-based full-disk encryption on linux</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Using Secure Boot and TPM 2.0
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Aug 30, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>I encrypt my laptop to have the peace of mind &ndash; if it were to get stolen my data would mostly be safe. It would still be stressfull, a loss of money and a bit of a mess, but at least a thief wouldn&rsquo;t open the laptop and find a bunch of payment information, emails and sensitive information. So far I have used a password, but now that my new laptop has a fingerprint reader I wanted to see if I can use my fingerprint instead.</p>
+<p>Caveat: Of course fingerprints are much less secure than a password (e.g. it can be stolen from <a class="link" href="https://www.bbc.co.uk/news/technology-30623611"  target="_blank" rel="noopener"
+    >a photograph</a>), but its all about defending against the right threat levels (<a class="link" href="https://xkcd.com/538/"  target="_blank" rel="noopener"
+    >relevant xkcd</a>) and picking low-hanging fruits. So consider this just a convinient way to project your data against simple &ldquo;start the laptop and check&rdquo; or &ldquo;take out the hard drive and look&rdquo; scenarios.</p>
+<p>So why is this <strong>not</strong> super easy? Basically you cannot &ldquo;read off&rdquo; an encryption key from a fingerprint, because the reading will look slightly different every time. You can only compare a fingerprint against stored fingerprints and check if they match. The problem now is, where do you put those comparison fingerprints on your laptop? You can&rsquo;t put them into the unencrypted part, then the &ldquo;attacker&rdquo; could simply access and replace them with their own. But you can&rsquo;t simply put them into the encrypted part because you cannot access it before decrypting it.</p>
+<p>I can think of two solutions here, both invole using and trusting your laptop&rsquo;s UEFI/BIOS software:</p>
+<ul>
+<li>Store the hard drive encryption key in the UEFI and configure it so that it requires a fingerprint when the computer starts up (&ldquo;power on password&rdquo;). Assuming the UEFI is secure (which it might not be, but it probably is sufficient for the simple theft model from above), one cannot unlock the UEFI without the fingerprint and cannot unlock the hard drive without the UEFI. Unfortunately <a class="link" href="https://support.lenovo.com/gb/en/solutions/ht037692-fingerprint-reader-tips-windows-7-8-thinkpad#replace"  target="_blank" rel="noopener"
+    >this functionality</a> seems to be only available via Lenovo&rsquo;s Windows fingerprint sofrware.</li>
+<li>Store the hard drive encryption key in the UEFI and configure it (via Secure Boot) so that it only boots into a &ldquo;secure&rdquo; operating system (your Linux installation). Then your computer boots the OS and it asks you for your password / fingerprint. The first part means that your computer won&rsquo;t boot (or at least won&rsquo;t give away your hard drive encryption key) if it is not booting your OS. Afterwards your hard drive will actually be decrypted without having checked your fingerprint, but it is running your Linux installation which you have password- or fingerprint-protected.</li>
+</ul>
+<p>Of course both methods have their weaknesses, in particular bugs or mistakes in the UEFI could break either method, and bugs in Linux / your login manager break the 2nd option. But again, we&rsquo;re just trying to protect our data from a thief who steals your laptop in the subway and wants to resell it, not a government attack. If you need better security really use a password. PS: If you don&rsquo;t have a fingerprint reader and use a password to login anyway, don&rsquo;t use this method. I would instead recommend a normal password-based disk encryption and autologin on Linux as opposed to automatic decryption and password-based login, to avoid additional points of weakness.</p>
+<p>So for our method we need 3 steps</p>
+<ol>
+<li>Set up secure boot to only boot the operating system we want.</li>
+<li>Set up our Trusted Platform Module (TPM) to give out the encryption key if the previous criterion is fulfilled, and decrypt the harddrive.</li>
+<li>Set up Linux to ask for a fingerprint on login.</li>
+</ol>
+<p>I will walk through my steps below. Keep in mind that this worked for me using the ThinkPad X1 Carbon Generation 9, unfortunately not all UEFI implementations work similar. In particular some very early laptop models had bugs that could brick the UEFI, and many Windows-laptops come pre-encrypted and might or might not unlock after you made changes in the UEFI (in that case I recommend exporting the encryption key or disabling <a class="link" href="https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview"  target="_blank" rel="noopener"
+    >BitLocker</a> encryption).</p>
+<h2 id="implementation">Implementation
+</h2><h3 id="secure-boot-setup">Secure Boot setup
+</h3><p>To enable Secure Boot and make boot only our &ldquo;signed&rdquo; operating systems, we first need to sign it. By default most UEFI configurations trust keys from Microsoft, Canonical, various others, and the manufacturer. As we do not have those keys we generate our own keys and add them to the UEFI. I am basically following <a class="link" href="https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Implementing_Secure_Boot"  target="_blank" rel="noopener"
+    >this guide</a> and use <a class="link" href="https://www.rodsbooks.com/efi-bootloaders/mkkeys.sh"  target="_blank" rel="noopener"
+    >this script</a> by <a class="link" href="https://www.rodsbooks.com/efi-bootloaders/controlling-sb.html#creatingkeys"  target="_blank" rel="noopener"
+    >Rod Smith</a>. Obviously give that script a read before running code downloaded from the internet! At the time of writing (2021) the script matches with the explanations in the <a class="link" href="https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Creating_keys"  target="_blank" rel="noopener"
+    >ArchWiki</a> article and seems to make sense.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl -L -O https://www.rodsbooks.com/efi-bootloaders/mkkeys.sh
+</span></span><span style="display:flex;"><span>chmod +x mkkeys.sh
+</span></span><span style="display:flex;"><span>./mkkeys.sh
+</span></span></code></pre></div><p>Then we can use these keys to sign various binaries. Be aware that anything you sign (e.g. debugging images) can boot and obtain your hard drive decryption keys from the UEFI. PS: What is referred to as &ldquo;Common Name&rdquo; is really just a name that you later see e.g. in your UEFI&rsquo;s list of keys, choose something (e.g. your name) to later make it obvious that this is your key and not one of the many pre-installed ones. Here I sign the</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sbsign --key db.key --cert db.crt --output /boot/vmlinuz-linux /boot/vmlinuz-linux
+</span></span><span style="display:flex;"><span>sbsign --key db.key --cert db.crt --output esp/EFI/BOOT/BOOTx64.EFI esp/EFI/BOOT/BOOTx64.EFI
+</span></span></code></pre></div><p>Finally we &ldquo;enroll&rdquo; the key to tell it to trust this key. Here are some important caveats:</p>
+<ul>
+<li>The encryption software (luks) will check the Platform Configuration Registers (PCRs) before unlocking the drive, to check that Secure Boot is still enabled and no relevant settings have changed. Depending on how your TPM / Secure Boot works, booting images signed with a different key willl produce different PCRs or not. If it does create different PCRs, you do not have to worry about the other (e.g. preinstalled) keys on your laptop. If the PCRs are identical you might want to, if possible, remove preinstalled keys.</li>
+<li>Warning: I heard of some reports that (a) enrolling your own keys or especially (b) removing the other keys could &ldquo;brick&rdquo; (make unusable) your laptop. As a rule of thumb, this problem mostly affected older early UEFI laptops but I highly recommend to check online first. Also remember the warning about BitLocker above.</li>
+</ul>
+<p>I enrolled my <code>db</code> key (as far as I can see that is the only one needed) by copying it to the (unencrypted, FAT32 formatted) EFI partition of my hard drive (a USB stick probably works too). My UEFI was fine with <code>.auth</code> or <code>.cer</code> formats, I used the former as recommended in the <a class="link" href="https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Using_firmware_setup_utility"  target="_blank" rel="noopener"
+    >ArchWiki</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir /boot/keys <span style="color:#f92672">&amp;&amp;</span> cp db.auth /boot/keys
+</span></span></code></pre></div><p>Then I went through the UEFI menu to &ldquo;enroll&rdquo; this new Signature Database (db) key. I did not enroll the Platform Key (PK), Key Exchange Key (KEK) or add a Forbidden Signature Database (dbx), not sure why they would need to be so I left them out for now (maybe if one wanted to update keys without manually going into the UEFI menu).</p>
+<h3 id="tpm-20-to-decrypt-disk">TPM 2.0 to decrypt disk
+</h3><p>I encrypted my disk using luks2, set up roughly following <a class="link" href="https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition"  target="_blank" rel="noopener"
+    >this ArchWiki guide</a>. I have one small unencrypted 2 GB partition (<code>nvme0n1p1</code>) formatted as FAT32 and one large encrypted 1 TB ext4-formatted partition ((<code>nvme0n1p2</code>)). Now I follow <a class="link" href="https://wiki.archlinux.org/title/Trusted_Platform_Module#Data-at-rest_encryption_with_LUKS"  target="_blank" rel="noopener"
+    >this ArchWiki guide</a> to add my tpm device as an additional option to unlock the disk (keeping the password as a backup).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemd-cryptenroll --tpm2-device<span style="color:#f92672">=</span>auto --tpm2-pcrs<span style="color:#f92672">=</span>0,1,7 /dev/nvme0n1p2
+</span></span></code></pre></div><p>Note that I use <code>--tpm2-device=auto</code> since I have only one tpm device. I use the Platform Configuration Registers (PCRs) 0,1, and 7 to check the UEFI version, UEFI settings, and &ldquo;Secure Boot State&rdquo;, respectively. This basically means the TPM will release the key to decrypt the disk if and only if all these registers contain the correct values. The important one is PCR7 which, <em>in my system,</em> changes if the booted binary is signed with a different key. You can look at these values using <code>sudo tpm2_pcrread</code> and observe when they change.</p>
+<p>I also need to make sure the initramfs has the tools to decrypt this (the <code>sd-encrypt</code> hook is the relevant one, as well as <code>systemd</code> and <code>keyboard</code>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>HOOKS<span style="color:#f92672">=(</span>base systemd autodetect keyboard modconf block sd-encrypt filesystems fsck<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>And add the appropriate options to my bootloader. I am using systemd-boot so I added the following line to the config file</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>options rd.luks.name<span style="color:#f92672">=</span>adda8e-62.......a84f<span style="color:#f92672">=</span>cr rd.luks.options<span style="color:#f92672">=</span>adda8e-62.......a84f<span style="color:#f92672">=</span>tpm2-device<span style="color:#f92672">=</span>auto root<span style="color:#f92672">=</span>dev/mapper/cr
+</span></span></code></pre></div><p>where the 1st and 3rd part is just the usual encryption setup, the middle part tells luks to check the tpm for a key. The long number is just the UUID of my disk, <code>/dev/nvme0n1p2</code>.</p>
+<h3 id="fingerprint-login-in-linux">Fingerprint login in Linux
+</h3><p>This step is actually quite easy! I spend a long time searching for compatible login managers until realizing I don&rsquo;t need one. You can of course use one if you like.</p>
+<p>Anyway, back to the <a class="link" href="https://wiki.archlinux.org/title/fprint"  target="_blank" rel="noopener"
+    >ArchWiki</a>. The first step is to install <code>fprintd</code> and enroll at least one of your fingerprints. Note that for this enroll process, and only for the enroll process, you need a <a class="link" href="https://wiki.archlinux.org/title/Polkit#Authentication_agents"  target="_blank" rel="noopener"
+    >authentication agent</a> running. I usually don&rsquo;t use one (i.e. just use the text-based pre-installed fallback &ldquo;pkttyagent&rdquo;) but for this I installed <code>lxsession-gtk3</code> (and executed <code>lxsession</code>). I enrolled two fingers to easily reach my fingerprint reader:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>fprintd-enroll
+</span></span><span style="display:flex;"><span>fprintd-enroll -f right-ring-finger
+</span></span></code></pre></div><p>To now use those fingerprints to log in, simply edit <code>/etc/pam.d/system-local-login</code> and add the line</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>auth      sufficient pam_fprintd.so
+</span></span></code></pre></div><p>at the top (note that this might be different for your Linux distribution). I added the same in <code>/etc/pam.d/{sudo,polkit-1}</code> to authenticate <code>sudo</code> with a fingerprint, and also answer all those polkit checks (e.g. when you use &ldquo;systemctl&rdquo; to do something) with my fingerprint, and you can find a lost of other programs in that directory as well (from login managers such as sddm and lightdm to xscreensaver and i3lock).</p>
+<p><em>Acknowledgements:</em> I want to mention that a lot of this was inspired by <a class="link" href="https://pawitp.medium.com/full-disk-encryption-on-arch-linux-backed-by-tpm-2-0-c0892cab9704"  target="_blank" rel="noopener"
+    >this medium post</a>. I didn&rsquo;t end up using that method but it helped me a lot to see what is possible and what I need. As you probably noticed, I got most of this from various pages in the <a class="link" href="https://wiki.archlinux.org/"  target="_blank" rel="noopener"
+    >ArchWiki</a> so huge credits to all the volunteers maintaining this. I also owe credit to <a class="link" href="https://www.rodsbooks.com/efi-bootloaders/controlling-sb.html"  target="_blank" rel="noopener"
+    >Roderick Smith</a> for the Secure Boot key generation information and script.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Stefan Heimersheim
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

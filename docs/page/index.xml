@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Pages on Stefan Heimersheim</title>
+        <link>http://localhost:1313/page/</link>
+        <description>Recent content in Pages on Stefan Heimersheim</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sun, 06 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Archives</title>
+        <link>http://localhost:1313/page/archives/</link>
+        <pubDate>Sun, 06 Mar 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/page/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>About</title>
+        <link>http://localhost:1313/page/about/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/page/about/</guid>
+        <description>&lt;p&gt;Hi, I&amp;rsquo;m Stefan! I try to understand neural networks &amp;amp; LLMs by analysing their internals (&amp;ldquo;mechanistic interpretability&amp;rdquo;). I work at the non-profit organization &lt;a class=&#34;link&#34; href=&#34;https://www.apolloresearch.ai/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Apollo Research&lt;/a&gt; where I develop new mechanistic interpretability tools, and research how interpretability can enhance model evaluations for AI safety.&lt;/p&gt;
+&lt;h3 id=&#34;contact&#34;&gt;Contact
+&lt;/h3&gt;&lt;p&gt;The best way to get in touch with me are email (&lt;em&gt;firstname.lastname@gmail.com&lt;/em&gt;, &lt;a class=&#34;link&#34; href=&#34;mailto:stefan@heimersheim.eu&#34; &gt;stefan@heimersheim.eu&lt;/a&gt;) or DMs on &lt;a class=&#34;link&#34; href=&#34;https://www.lesswrong.com/users/stefan42&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;LessWrong&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;legal&#34;&gt;Legal
+&lt;/h3&gt;&lt;p&gt;Responsible for the content on this site is&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Stefan Heimersheim
+25 Holywell Row
+EC2A 4XE
+London
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;External link disclaimer:&lt;/em&gt; This website may include links to third-party websites for your convenience. I do not control or endorse the content, services, or views provided by these external sites. Use of such links is at your own discretion, and I am not responsible for the privacy practices or terms of those websites.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Search</title>
+        <link>http://localhost:1313/page/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/page/search/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

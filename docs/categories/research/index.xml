@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Research on Stefan Heimersheim</title>
+        <link>http://localhost:1313/categories/research/</link>
+        <description>Recent content in Research on Stefan Heimersheim</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 08 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/research/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Removing LayerNorm</title>
+        <link>http://localhost:1313/post/remove-layer-norm/</link>
+        <pubDate>Thu, 08 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/remove-layer-norm/</guid>
+        <description>&lt;img src="http://localhost:1313/post/remove-layer-norm/cover.webp" alt="Featured image of post Removing LayerNorm" /&gt;&lt;p&gt;LayerNorm is annoying for mechanistic interpretability research (“[&amp;hellip;] reason #78 for why interpretability researchers hate LayerNorm” – &lt;a class=&#34;link&#34; href=&#34;https://transformer-circuits.pub/2023/may-update/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Anthropic, 2023&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Here’s a &lt;a class=&#34;link&#34; href=&#34;https://huggingface.co/apollo-research/gpt2_noLN&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hugging Face link&lt;/a&gt; to a GPT2-small model without any LayerNorm.&lt;/p&gt;
+&lt;p&gt;The final model is only slightly worse than a GPT2 with LayerNorm.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Dataset&lt;/th&gt;
+          &lt;th&gt;Original GPT2&lt;/th&gt;
+          &lt;th&gt;Fine-tuned GPT2 with LayerNorm&lt;/th&gt;
+          &lt;th&gt;Fine-tuned GPT2 without LayerNorm&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OpenWebText (ce_loss)&lt;/td&gt;
+          &lt;td&gt;3.095&lt;/td&gt;
+          &lt;td&gt;2.989&lt;/td&gt;
+          &lt;td&gt;3.014 (+0.025)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;ThePile (ce_loss)&lt;/td&gt;
+          &lt;td&gt;2.856&lt;/td&gt;
+          &lt;td&gt;2.880&lt;/td&gt;
+          &lt;td&gt;2.926 (+0.046)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;HellaSwag (accuracy)&lt;/td&gt;
+          &lt;td&gt;29.56%&lt;/td&gt;
+          &lt;td&gt;29.82%&lt;/td&gt;
+          &lt;td&gt;29.54%&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For more details, see my &lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/abs/2409.13710&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;paper&lt;/a&gt; or &lt;a class=&#34;link&#34; href=&#34;https://www.alignmentforum.org/posts/THzcKKQd4oWkg4dSP/you-can-remove-gpt2-s-layernorm-by-fine-tuning-for-an-hour&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AlignmentForum post&lt;/a&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Sea Cucumber Essence</title>
+        <link>http://localhost:1313/post/sea-cucumber-essence/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/sea-cucumber-essence/</guid>
+        <description>&lt;img src="http://localhost:1313/post/sea-cucumber-essence/cover.png" alt="Featured image of post Sea Cucumber Essence" /&gt;&lt;p&gt;&lt;em&gt;Cross-posted on &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;. There are also &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/HAAISS_lighting_talk.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;slides&lt;/a&gt; from my lightning talk at the Human Aligned AI Summer School 2022.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In short, why does this (maximized node &lt;code&gt;4&lt;/code&gt; in the &lt;code&gt;block5_conv4&lt;/code&gt; layer of &lt;code&gt;VGG19&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/node4.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;node4&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;look like &lt;code&gt;sea_cucumber&lt;/code&gt; to all ImageNet-trained CNNs?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;tSNE&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;context&#34;&gt;Context
+&lt;/h2&gt;&lt;p&gt;Using my &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;feature extraction&lt;/a&gt; script I analyzed node &lt;code&gt;4&lt;/code&gt; in the &lt;code&gt;block5_conv4&lt;/code&gt; layer of &lt;code&gt;VGG19&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import numpy as np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import matplotlib.pyplot as plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import tensorflow as tf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;from tensorflow.keras.preprocessing import image
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;from PIL import Image 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG19&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;False, weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target_layer&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;block5_conv4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Take the network and cut it off at the layer we want to analyze,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# i.e. we only need the part from the input to the target_layer.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;base_model.get_layer&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;target_layer&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.output&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;part_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.Model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;inputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;base_model.input, outputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;target&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# The next part is the function to maximize the target layer/node by&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# adjusting the input, equivalent to the usual gradient descent but&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# gradient ascent. Run an optimization loop:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;activation &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;@tf.function&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Decorator to increase the speed of the gradient_ascent function&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    input_signature&lt;span style=&#34;color:#f92672&#34;&gt;=(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[&lt;/span&gt;None,None,3&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.float32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.int32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.float32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;def gradient_ascent&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, steps, step_size&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; n in tf.range&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# As in normal NN training, you want to record the computation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# of the forward-pass (the part_model call below) to compute the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# gradient afterwards. This is what tf.GradientTape does.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        with tf.GradientTape&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; as tape:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            tape.watch&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Forward-pass (compute the activation given our image)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            activation &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; part_model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tf.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.shape&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# The activation will be of shape (1,N,N,L) where N is related to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# the resolution of the input image (assuming our target layer is&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# a convolutional filter), and L is the size of the layer. E.g. for a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# 256x256 image in &amp;#34;block4_conv1&amp;#34; of VGG19, this will be&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# (1,32,32,512) -- we select one of the 512 nodes (index) and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# average over the rest (you can average selectively to affect&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# only part of the image but there&amp;#39;s not really a point):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.math.reduce_mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;:,:,:,target_index&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Get the gradient, i.e. derivative of &amp;#34;loss&amp;#34; with respect to input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# and normalize.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        gradients &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tape.gradient&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;loss, img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        gradients /&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.math.reduce_std&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;gradients&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# In the final step move the image in the direction of the gradient to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# increate the &amp;#34;loss&amp;#34; (our targeted activation). Note that the sign here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# is opposite to the typical gradient descent (our &amp;#34;loss&amp;#34; is the target &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# activation which we maximize, not something we minimize).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; img + gradients*step_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.clip_by_value&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, -1, 1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; loss, img
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Preprocessing of the image (converts from [0..255] to [-1..1]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;starting_img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np.random.randint&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0,high&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;255,size&lt;span style=&#34;color:#f92672&#34;&gt;=(&lt;/span&gt;224,224,3&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np.uint8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;starting_img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.convert_to_tensor&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Run the gradient ascent loop&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;loss, img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; gradient_ascent&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;step_size&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Convert back to [0..255] and return the new image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.cast&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;255*&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img + 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;/2.0, tf.uint8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt.imshow&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.array&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;im &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Image.fromarray&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.array&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;im.save&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;node4.png&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;the-confusing-part&#34;&gt;The confusing part
+&lt;/h2&gt;&lt;p&gt;Judging my the &lt;a class=&#34;link&#34; href=&#34;https://microscope.openai.com/models/vgg19_caffe/conv5_4_conv5_4_0/4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenAI Microscope&lt;/a&gt; it looks like the node mostly gets activated by furry animals &amp;ndash; &lt;em&gt;in the training set&lt;/em&gt;. Of course our image in artificial and this far outside the usual distribution, and we can expect such different behaviour. But why do we get the &lt;code&gt;sea_cucumber&lt;/code&gt; prediction, rather than predictions of &lt;code&gt;dog&lt;/code&gt;, &lt;code&gt;bison&lt;/code&gt; or &lt;code&gt;lion&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;Feeding this image into the network, it seems insanely sure that the right label is &lt;code&gt;sea_cucumber&lt;/code&gt;. Also other imagenet-trained networks such as Inception or VGG16 give the same result. Note: This was not indended and not optimized for.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg19 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG19&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg19.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.vgg19.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01924916&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flatworm&amp;#39;&lt;/span&gt;, 1.2730256e-33&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01981276&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;king_crab&amp;#39;&lt;/span&gt;, 2.537045e-37&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg16 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG16&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg16.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg16.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.vgg16.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01950731&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_slug&amp;#39;&lt;/span&gt;, 4.6657154e-15&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01924916&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flatworm&amp;#39;&lt;/span&gt;, 1.810621e-15&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_resnet &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.ResNet50&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.resnet.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_resnet.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.resnet.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 0.9790509&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n12144580&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;corn&amp;#39;&lt;/span&gt;, 0.00899157&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n13133613&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ear&amp;#39;&lt;/span&gt;, 0.005869923&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Even this online service (&lt;a class=&#34;link&#34; href=&#34;https://www.snaplogic.com/machine-learning-showcase/image-recognition-inception-v3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;snaplogic using Inception&lt;/a&gt;) mistakes a picture of my phone screen showing the image: &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/recognize.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;recognize&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;investigation&#34;&gt;Investigation
+&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s look at the activations, after feeding the image into the VGG19 network I have been using:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;model_vgg19.get_layer&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;block5_conv4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.output&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg19_cutoff &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.Model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;inputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;model_vgg19.input, outputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;target&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;activations &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg19_cutoff.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt.plot&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activations, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activations.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; So the question we&amp;rsquo;re asking, is this the typical pattern for a dog or bison? Or maybe closer to the &lt;code&gt;sea_cucumber&lt;/code&gt; pattern, in this 512-dimensional space?&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s have a look at the &lt;code&gt;groenendael&lt;/code&gt; (1st image in Microscope) and &lt;code&gt;sea_cucumber&lt;/code&gt; classes, as well as a few randomly selected ones. I downloaded the imagenet data and used &lt;a class=&#34;link&#34; href=&#34;https://image-net.org/challenges/LSVRC/2017/browse-synsets.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this list&lt;/a&gt; to find the right files. &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/groenendael.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; Hmm I don&amp;rsquo;t really see a pattern by eye here, nor a similarity to above / excitation in index 4. In hindsight this makes sense, we wouldn&amp;rsquo;t expect the category to be simply 1-hot encoded in activation space, because a) there is not enough room, and b) there are more layers following so I would rather think of some clusters in the high dimensional activation space. Let&amp;rsquo;s maybe look some summary statistic, like the absolute distance in this 512-dim vector space.&lt;/p&gt;
+&lt;p&gt;So I take the training images, feed them into the network and read of the activations of the 512 nodes in the layer we are looking at (averaged over the 14x14 locations). Then I compute the distance as absolute distance between the vectors, 512-dimenisonal L2 norm. The image below shows the distance between the optimized &amp;ldquo;sea_cucumber essence&amp;rdquo; image and the activations of &lt;code&gt;sea_cucumber&lt;/code&gt; training data (green), &lt;code&gt;groenendael&lt;/code&gt; (blue), and a mix of 10 random classes (100 random images each). The blue curve shows the average activation-distance between randomly selected images of different classes. The code for all the following plots can be found in &lt;code&gt;code_distances.py&lt;/code&gt;. &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_node4maximized.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;distances&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;For context, here is the average distance between randomly selected images (grey), images from the same class (red) and images from different classes (blue): &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_general.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; We learn three main things here:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Generally images of the same class seem to be nearer to each other in this 512-dim space than random / different classes, but the effect is not very strong. Of course we wouldn&amp;rsquo;t expect that the distance is the best measure of &amp;ldquo;closeness&amp;rdquo; between activations.&lt;/li&gt;
+&lt;li&gt;These numbers are all waaaay smaller than the ~7k and 36k we get from the &amp;ldquo;sea_cucumber essence&amp;rdquo; image. This tells us (somewhat unsurprisingly) that that optimized image is far outside the training distribution in at least this measure.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;sea_cucumber&lt;/code&gt; training data seems to give activations &lt;em&gt;slightly&lt;/em&gt; closer to the &amp;ldquo;sea_cucumber essence&amp;rdquo; image &amp;ndash; so maybe it&amp;rsquo;s just far outside the distribution but into the &lt;code&gt;sea_cucumber&lt;/code&gt; direction?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Naturally the L2-distance isn&amp;rsquo;t the ideal way to reduce the 512-d space into something plot-able. One method I found is &lt;a class=&#34;link&#34; href=&#34;https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;t-SNE&lt;/a&gt; which projects the 512-dimensions into two parameters which we can plot: &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; Looks like we get a nice separation (t-SNE does not know the labels) of different categories, and the &amp;ldquo;sea_cucumber essence&amp;rdquo; activations tend to lie within the &lt;code&gt;sea_cucumber&lt;/code&gt; training data!&lt;/p&gt;
+&lt;p&gt;This doesn&amp;rsquo;t definitely answer the question, but I think it&amp;rsquo;s clear that this node4-maximized image ends up in a corner of parameter space which, even though it is &amp;ldquo;far away&amp;rdquo; (L2 distance), lies in a region that is clearly near the region that &lt;code&gt;sea_cucumber&lt;/code&gt; training images lie in. Presented with this out-of-distribution image, and tasked with choosing between only the existing categories, the network decides for &lt;code&gt;sea_cucumber&lt;/code&gt;.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

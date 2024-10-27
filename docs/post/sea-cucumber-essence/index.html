@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="An Exploration of feature visualization, and their relation to adversarial examples.">
+<title>Sea Cucumber Essence</title>
+
+<link rel='canonical' href='http://localhost:1313/post/sea-cucumber-essence/'>
+
+<link rel="stylesheet" href="/scss/style.min.f281ffb5054b6017cc01f0cdf4feb55cb5dea6541d2978295fb70624bd3fb79c.css"><meta property='og:title' content="Sea Cucumber Essence">
+<meta property='og:description' content="An Exploration of feature visualization, and their relation to adversarial examples.">
+<meta property='og:url' content='http://localhost:1313/post/sea-cucumber-essence/'>
+<meta property='og:site_name' content='Stefan Heimersheim'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-07-22T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-07-22T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/sea-cucumber-essence/cover.png' />
+<meta name="twitter:title" content="Sea Cucumber Essence">
+<meta name="twitter:description" content="An Exploration of feature visualization, and their relation to adversarial examples."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/sea-cucumber-essence/cover.png' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu12628761305366239463.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Stefan Heimersheim</a></h1>
+            <h2 class="site-description">Mechanistic Interpretability @ Apollo Research.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:stefan@heimersheim.eu'
+                        target="_blank"
+                        title="Email"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Stefan-Heimersheim/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.lesswrong.com/users/stefan42'
+                        target="_blank"
+                        title="LessWrong"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-north-star"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h18" /><path d="M12 21v-18" /><path d="M7.5 7.5l9 9" /><path d="M7.5 16.5l9 -9" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/sheimersheim'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/sea-cucumber-essence/">
+                <img src="/post/sea-cucumber-essence/cover_hu4347303266388399455.png"
+                        srcset="/post/sea-cucumber-essence/cover_hu4347303266388399455.png 800w, /post/sea-cucumber-essence/cover_hu9469685805414738200.png 1600w"
+                        width="800" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post Sea Cucumber Essence" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/research/" style="background-color: #2a9d8f; color: #fff;">
+                Research
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/sea-cucumber-essence/">Sea Cucumber Essence</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            An Exploration of feature visualization, and their relation to adversarial examples.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 22, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><em>Cross-posted on <a class="link" href="https://github.com/Stefan-Heimersheim/sea_cucumber_essence"  target="_blank" rel="noopener"
+    >GitHub</a>. There are also <a class="link" href="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/HAAISS_lighting_talk.pdf"  target="_blank" rel="noopener"
+    >slides</a> from my lightning talk at the Human Aligned AI Summer School 2022.</em></p>
+<p>In short, why does this (maximized node <code>4</code> in the <code>block5_conv4</code> layer of <code>VGG19</code>)</p>
+<p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/node4.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="node4"
+	
+	
+></p>
+<p>look like <code>sea_cucumber</code> to all ImageNet-trained CNNs?</p>
+<p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="tSNE"
+	
+	
+></p>
+<h2 id="context">Context
+</h2><p>Using my <a class="link" href="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/"  target="_blank" rel="noopener"
+    >feature extraction</a> script I analyzed node <code>4</code> in the <code>block5_conv4</code> layer of <code>VGG19</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>import numpy as np
+</span></span><span style="display:flex;"><span>import matplotlib.pyplot as plt
+</span></span><span style="display:flex;"><span>import tensorflow as tf
+</span></span><span style="display:flex;"><span>from tensorflow.keras.preprocessing import image
+</span></span><span style="display:flex;"><span>from PIL import Image 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>base_model <span style="color:#f92672">=</span> tf.keras.applications.VGG19<span style="color:#f92672">(</span>include_top<span style="color:#f92672">=</span>False, weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>target_layer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;block5_conv4&#34;</span>
+</span></span><span style="display:flex;"><span>target_index<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>steps<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>step_size<span style="color:#f92672">=</span>0.1
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Take the network and cut it off at the layer we want to analyze,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># i.e. we only need the part from the input to the target_layer.</span>
+</span></span><span style="display:flex;"><span>target <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>base_model.get_layer<span style="color:#f92672">(</span>target_layer<span style="color:#f92672">)</span>.output<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>part_model <span style="color:#f92672">=</span> tf.keras.Model<span style="color:#f92672">(</span>inputs<span style="color:#f92672">=</span>base_model.input, outputs<span style="color:#f92672">=</span>target<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The next part is the function to maximize the target layer/node by</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># adjusting the input, equivalent to the usual gradient descent but</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gradient ascent. Run an optimization loop:</span>
+</span></span><span style="display:flex;"><span>activation <span style="color:#f92672">=</span> None
+</span></span><span style="display:flex;"><span>@tf.function<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Decorator to increase the speed of the gradient_ascent function</span>
+</span></span><span style="display:flex;"><span>    input_signature<span style="color:#f92672">=(</span>
+</span></span><span style="display:flex;"><span>        tf.TensorSpec<span style="color:#f92672">(</span>shape<span style="color:#f92672">=[</span>None,None,3<span style="color:#f92672">]</span>, dtype<span style="color:#f92672">=</span>tf.float32<span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>        tf.TensorSpec<span style="color:#f92672">(</span>shape<span style="color:#f92672">=[]</span>, dtype<span style="color:#f92672">=</span>tf.int32<span style="color:#f92672">)</span>,
+</span></span><span style="display:flex;"><span>        tf.TensorSpec<span style="color:#f92672">(</span>shape<span style="color:#f92672">=[]</span>, dtype<span style="color:#f92672">=</span>tf.float32<span style="color:#f92672">)</span>,<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>def gradient_ascent<span style="color:#f92672">(</span>img, steps, step_size<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>    loss <span style="color:#f92672">=</span> tf.constant<span style="color:#f92672">(</span>0.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> n in tf.range<span style="color:#f92672">(</span>steps<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># As in normal NN training, you want to record the computation</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># of the forward-pass (the part_model call below) to compute the</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># gradient afterwards. This is what tf.GradientTape does.</span>
+</span></span><span style="display:flex;"><span>        with tf.GradientTape<span style="color:#f92672">()</span> as tape:
+</span></span><span style="display:flex;"><span>            tape.watch<span style="color:#f92672">(</span>img<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Forward-pass (compute the activation given our image)</span>
+</span></span><span style="display:flex;"><span>            activation <span style="color:#f92672">=</span> part_model<span style="color:#f92672">(</span>tf.expand_dims<span style="color:#f92672">(</span>img, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>            print<span style="color:#f92672">(</span>activation<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>            print<span style="color:#f92672">(</span>np.shape<span style="color:#f92672">(</span>activation<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># The activation will be of shape (1,N,N,L) where N is related to</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># the resolution of the input image (assuming our target layer is</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># a convolutional filter), and L is the size of the layer. E.g. for a</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># 256x256 image in &#34;block4_conv1&#34; of VGG19, this will be</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># (1,32,32,512) -- we select one of the 512 nodes (index) and</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># average over the rest (you can average selectively to affect</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># only part of the image but there&#39;s not really a point):</span>
+</span></span><span style="display:flex;"><span>            loss <span style="color:#f92672">=</span> tf.math.reduce_mean<span style="color:#f92672">(</span>activation<span style="color:#f92672">[</span>:,:,:,target_index<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Get the gradient, i.e. derivative of &#34;loss&#34; with respect to input</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># and normalize.</span>
+</span></span><span style="display:flex;"><span>        gradients <span style="color:#f92672">=</span> tape.gradient<span style="color:#f92672">(</span>loss, img<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        gradients /<span style="color:#f92672">=</span> tf.math.reduce_std<span style="color:#f92672">(</span>gradients<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># In the final step move the image in the direction of the gradient to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># increate the &#34;loss&#34; (our targeted activation). Note that the sign here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># is opposite to the typical gradient descent (our &#34;loss&#34; is the target </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># activation which we maximize, not something we minimize).</span>
+</span></span><span style="display:flex;"><span>        img <span style="color:#f92672">=</span> img + gradients*step_size
+</span></span><span style="display:flex;"><span>        img <span style="color:#f92672">=</span> tf.clip_by_value<span style="color:#f92672">(</span>img, -1, 1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> loss, img
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Preprocessing of the image (converts from [0..255] to [-1..1]</span>
+</span></span><span style="display:flex;"><span>starting_img <span style="color:#f92672">=</span> np.random.randint<span style="color:#f92672">(</span>low<span style="color:#f92672">=</span>0,high<span style="color:#f92672">=</span>255,size<span style="color:#f92672">=(</span>224,224,3<span style="color:#f92672">)</span>, dtype<span style="color:#f92672">=</span>np.uint8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> tf.keras.applications.vgg19.preprocess_input<span style="color:#f92672">(</span>starting_img<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> tf.convert_to_tensor<span style="color:#f92672">(</span>img<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Run the gradient ascent loop</span>
+</span></span><span style="display:flex;"><span>loss, img <span style="color:#f92672">=</span> gradient_ascent<span style="color:#f92672">(</span>img, tf.constant<span style="color:#f92672">(</span>steps<span style="color:#f92672">)</span>, tf.constant<span style="color:#f92672">(</span>step_size<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Convert back to [0..255] and return the new image</span>
+</span></span><span style="display:flex;"><span>img <span style="color:#f92672">=</span> tf.cast<span style="color:#f92672">(</span>255*<span style="color:#f92672">(</span>img + 1.0<span style="color:#f92672">)</span>/2.0, tf.uint8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>plt.imshow<span style="color:#f92672">(</span>np.array<span style="color:#f92672">(</span>img<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>im <span style="color:#f92672">=</span> Image.fromarray<span style="color:#f92672">(</span>np.array<span style="color:#f92672">(</span>img<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>im.save<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;node4.png&#34;</span><span style="color:#f92672">)</span>
+</span></span></code></pre></div><h2 id="the-confusing-part">The confusing part
+</h2><p>Judging my the <a class="link" href="https://microscope.openai.com/models/vgg19_caffe/conv5_4_conv5_4_0/4"  target="_blank" rel="noopener"
+    >OpenAI Microscope</a> it looks like the node mostly gets activated by furry animals &ndash; <em>in the training set</em>. Of course our image in artificial and this far outside the usual distribution, and we can expect such different behaviour. But why do we get the <code>sea_cucumber</code> prediction, rather than predictions of <code>dog</code>, <code>bison</code> or <code>lion</code>?</p>
+<p>Feeding this image into the network, it seems insanely sure that the right label is <code>sea_cucumber</code>. Also other imagenet-trained networks such as Inception or VGG16 give the same result. Note: This was not indended and not optimized for.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>model_vgg19 <span style="color:#f92672">=</span> tf.keras.applications.VGG19<span style="color:#f92672">(</span>weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span>, include_top<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> tf.keras.applications.vgg19.preprocess_input<span style="color:#f92672">(</span>np.expand_dims<span style="color:#f92672">(</span>img, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>predictions <span style="color:#f92672">=</span> model_vgg19.predict<span style="color:#f92672">(</span>x<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Predicted:&#39;</span>, tf.keras.applications.vgg19.decode_predictions<span style="color:#f92672">(</span>predictions, top<span style="color:#f92672">=</span>3<span style="color:#f92672">)[</span>0<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Predicted: <span style="color:#f92672">[(</span><span style="color:#e6db74">&#39;n02321529&#39;</span>, <span style="color:#e6db74">&#39;sea_cucumber&#39;</span>, 1.0<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n01924916&#39;</span>, <span style="color:#e6db74">&#39;flatworm&#39;</span>, 1.2730256e-33<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n01981276&#39;</span>, <span style="color:#e6db74">&#39;king_crab&#39;</span>, 2.537045e-37<span style="color:#f92672">)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model_vgg16 <span style="color:#f92672">=</span> tf.keras.applications.VGG16<span style="color:#f92672">(</span>weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span>, include_top<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> tf.keras.applications.vgg16.preprocess_input<span style="color:#f92672">(</span>np.expand_dims<span style="color:#f92672">(</span>img, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>predictions <span style="color:#f92672">=</span> model_vgg16.predict<span style="color:#f92672">(</span>x<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Predicted:&#39;</span>, tf.keras.applications.vgg16.decode_predictions<span style="color:#f92672">(</span>predictions, top<span style="color:#f92672">=</span>3<span style="color:#f92672">)[</span>0<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Predicted: <span style="color:#f92672">[(</span><span style="color:#e6db74">&#39;n02321529&#39;</span>, <span style="color:#e6db74">&#39;sea_cucumber&#39;</span>, 1.0<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n01950731&#39;</span>, <span style="color:#e6db74">&#39;sea_slug&#39;</span>, 4.6657154e-15<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n01924916&#39;</span>, <span style="color:#e6db74">&#39;flatworm&#39;</span>, 1.810621e-15<span style="color:#f92672">)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>model_resnet <span style="color:#f92672">=</span> tf.keras.applications.ResNet50<span style="color:#f92672">(</span>weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span>, include_top<span style="color:#f92672">=</span>True<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> tf.keras.applications.resnet.preprocess_input<span style="color:#f92672">(</span>np.expand_dims<span style="color:#f92672">(</span>img, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>predictions <span style="color:#f92672">=</span> model_resnet.predict<span style="color:#f92672">(</span>x<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>print<span style="color:#f92672">(</span><span style="color:#e6db74">&#39;Predicted:&#39;</span>, tf.keras.applications.resnet.decode_predictions<span style="color:#f92672">(</span>predictions, top<span style="color:#f92672">=</span>3<span style="color:#f92672">)[</span>0<span style="color:#f92672">])</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Predicted: <span style="color:#f92672">[(</span><span style="color:#e6db74">&#39;n02321529&#39;</span>, <span style="color:#e6db74">&#39;sea_cucumber&#39;</span>, 0.9790509<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n12144580&#39;</span>, <span style="color:#e6db74">&#39;corn&#39;</span>, 0.00899157<span style="color:#f92672">)</span>, <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;n13133613&#39;</span>, <span style="color:#e6db74">&#39;ear&#39;</span>, 0.005869923<span style="color:#f92672">)]</span>
+</span></span></code></pre></div><p>Even this online service (<a class="link" href="https://www.snaplogic.com/machine-learning-showcase/image-recognition-inception-v3"  target="_blank" rel="noopener"
+    >snaplogic using Inception</a>) mistakes a picture of my phone screen showing the image: <img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/recognize.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="recognize"
+	
+	
+></p>
+<h2 id="investigation">Investigation
+</h2><p>Let&rsquo;s look at the activations, after feeding the image into the VGG19 network I have been using:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>target <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>model_vgg19.get_layer<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;block5_conv4&#34;</span><span style="color:#f92672">)</span>.output<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>model_vgg19_cutoff <span style="color:#f92672">=</span> tf.keras.Model<span style="color:#f92672">(</span>inputs<span style="color:#f92672">=</span>model_vgg19.input, outputs<span style="color:#f92672">=</span>target<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> tf.keras.applications.vgg19.preprocess_input<span style="color:#f92672">(</span>np.expand_dims<span style="color:#f92672">(</span>img, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span><span style="display:flex;"><span>activations <span style="color:#f92672">=</span> model_vgg19_cutoff.predict<span style="color:#f92672">(</span>x<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>plt.plot<span style="color:#f92672">(</span>np.mean<span style="color:#f92672">(</span>np.mean<span style="color:#f92672">(</span>np.mean<span style="color:#f92672">(</span>activations, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">)</span>, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">)</span>, axis<span style="color:#f92672">=</span>0<span style="color:#f92672">))</span>
+</span></span></code></pre></div><p><img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activations.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+	
+> So the question we&rsquo;re asking, is this the typical pattern for a dog or bison? Or maybe closer to the <code>sea_cucumber</code> pattern, in this 512-dimensional space?</p>
+<p>Let&rsquo;s have a look at the <code>groenendael</code> (1st image in Microscope) and <code>sea_cucumber</code> classes, as well as a few randomly selected ones. I downloaded the imagenet data and used <a class="link" href="https://image-net.org/challenges/LSVRC/2017/browse-synsets.php"  target="_blank" rel="noopener"
+    >this list</a> to find the right files. <img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/groenendael.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+	
+> Hmm I don&rsquo;t really see a pattern by eye here, nor a similarity to above / excitation in index 4. In hindsight this makes sense, we wouldn&rsquo;t expect the category to be simply 1-hot encoded in activation space, because a) there is not enough room, and b) there are more layers following so I would rather think of some clusters in the high dimensional activation space. Let&rsquo;s maybe look some summary statistic, like the absolute distance in this 512-dim vector space.</p>
+<p>So I take the training images, feed them into the network and read of the activations of the 512 nodes in the layer we are looking at (averaged over the 14x14 locations). Then I compute the distance as absolute distance between the vectors, 512-dimenisonal L2 norm. The image below shows the distance between the optimized &ldquo;sea_cucumber essence&rdquo; image and the activations of <code>sea_cucumber</code> training data (green), <code>groenendael</code> (blue), and a mix of 10 random classes (100 random images each). The blue curve shows the average activation-distance between randomly selected images of different classes. The code for all the following plots can be found in <code>code_distances.py</code>. <img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_node4maximized.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="distances"
+	
+	
+></p>
+<p>For context, here is the average distance between randomly selected images (grey), images from the same class (red) and images from different classes (blue): <img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_general.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+	
+> We learn three main things here:</p>
+<ol>
+<li>Generally images of the same class seem to be nearer to each other in this 512-dim space than random / different classes, but the effect is not very strong. Of course we wouldn&rsquo;t expect that the distance is the best measure of &ldquo;closeness&rdquo; between activations.</li>
+<li>These numbers are all waaaay smaller than the ~7k and 36k we get from the &ldquo;sea_cucumber essence&rdquo; image. This tells us (somewhat unsurprisingly) that that optimized image is far outside the training distribution in at least this measure.</li>
+<li>The <code>sea_cucumber</code> training data seems to give activations <em>slightly</em> closer to the &ldquo;sea_cucumber essence&rdquo; image &ndash; so maybe it&rsquo;s just far outside the distribution but into the <code>sea_cucumber</code> direction?</li>
+</ol>
+<p>Naturally the L2-distance isn&rsquo;t the ideal way to reduce the 512-d space into something plot-able. One method I found is <a class="link" href="https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html"  target="_blank" rel="noopener"
+    >t-SNE</a> which projects the 512-dimensions into two parameters which we can plot: <img src="https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+	
+> Looks like we get a nice separation (t-SNE does not know the labels) of different categories, and the &ldquo;sea_cucumber essence&rdquo; activations tend to lie within the <code>sea_cucumber</code> training data!</p>
+<p>This doesn&rsquo;t definitely answer the question, but I think it&rsquo;s clear that this node4-maximized image ends up in a corner of parameter space which, even though it is &ldquo;far away&rdquo; (L2 distance), lies in a region that is clearly near the region that <code>sea_cucumber</code> training images lie in. Presented with this out-of-distribution image, and tasked with choosing between only the existing categories, the network decides for <code>sea_cucumber</code>.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Stefan Heimersheim
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

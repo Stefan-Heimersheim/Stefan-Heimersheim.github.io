@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Stefan Heimersheim</title>
+        <link>http://localhost:1313/post/</link>
+        <description>Recent content in Posts on Stefan Heimersheim</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Thu, 08 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Removing LayerNorm</title>
+        <link>http://localhost:1313/post/remove-layer-norm/</link>
+        <pubDate>Thu, 08 Aug 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/remove-layer-norm/</guid>
+        <description>&lt;img src="http://localhost:1313/post/remove-layer-norm/cover.webp" alt="Featured image of post Removing LayerNorm" /&gt;&lt;p&gt;LayerNorm is annoying for mechanistic interpretability research (“[&amp;hellip;] reason #78 for why interpretability researchers hate LayerNorm” – &lt;a class=&#34;link&#34; href=&#34;https://transformer-circuits.pub/2023/may-update/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Anthropic, 2023&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Here’s a &lt;a class=&#34;link&#34; href=&#34;https://huggingface.co/apollo-research/gpt2_noLN&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hugging Face link&lt;/a&gt; to a GPT2-small model without any LayerNorm.&lt;/p&gt;
+&lt;p&gt;The final model is only slightly worse than a GPT2 with LayerNorm.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Dataset&lt;/th&gt;
+          &lt;th&gt;Original GPT2&lt;/th&gt;
+          &lt;th&gt;Fine-tuned GPT2 with LayerNorm&lt;/th&gt;
+          &lt;th&gt;Fine-tuned GPT2 without LayerNorm&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;OpenWebText (ce_loss)&lt;/td&gt;
+          &lt;td&gt;3.095&lt;/td&gt;
+          &lt;td&gt;2.989&lt;/td&gt;
+          &lt;td&gt;3.014 (+0.025)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;ThePile (ce_loss)&lt;/td&gt;
+          &lt;td&gt;2.856&lt;/td&gt;
+          &lt;td&gt;2.880&lt;/td&gt;
+          &lt;td&gt;2.926 (+0.046)&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;HellaSwag (accuracy)&lt;/td&gt;
+          &lt;td&gt;29.56%&lt;/td&gt;
+          &lt;td&gt;29.82%&lt;/td&gt;
+          &lt;td&gt;29.54%&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;For more details, see my &lt;a class=&#34;link&#34; href=&#34;https://arxiv.org/abs/2409.13710&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;paper&lt;/a&gt; or &lt;a class=&#34;link&#34; href=&#34;https://www.alignmentforum.org/posts/THzcKKQd4oWkg4dSP/you-can-remove-gpt2-s-layernorm-by-fine-tuning-for-an-hour&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AlignmentForum post&lt;/a&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Sea Cucumber Essence</title>
+        <link>http://localhost:1313/post/sea-cucumber-essence/</link>
+        <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/sea-cucumber-essence/</guid>
+        <description>&lt;img src="http://localhost:1313/post/sea-cucumber-essence/cover.png" alt="Featured image of post Sea Cucumber Essence" /&gt;&lt;p&gt;&lt;em&gt;Cross-posted on &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;. There are also &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/HAAISS_lighting_talk.pdf&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;slides&lt;/a&gt; from my lightning talk at the Human Aligned AI Summer School 2022.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In short, why does this (maximized node &lt;code&gt;4&lt;/code&gt; in the &lt;code&gt;block5_conv4&lt;/code&gt; layer of &lt;code&gt;VGG19&lt;/code&gt;)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/node4.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;node4&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;look like &lt;code&gt;sea_cucumber&lt;/code&gt; to all ImageNet-trained CNNs?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;tSNE&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;context&#34;&gt;Context
+&lt;/h2&gt;&lt;p&gt;Using my &lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;feature extraction&lt;/a&gt; script I analyzed node &lt;code&gt;4&lt;/code&gt; in the &lt;code&gt;block5_conv4&lt;/code&gt; layer of &lt;code&gt;VGG19&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import numpy as np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import matplotlib.pyplot as plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;import tensorflow as tf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;from tensorflow.keras.preprocessing import image
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;from PIL import Image 
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG19&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;False, weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target_layer&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;block5_conv4&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;100&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0.1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Take the network and cut it off at the layer we want to analyze,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# i.e. we only need the part from the input to the target_layer.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;base_model.get_layer&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;target_layer&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.output&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;part_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.Model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;inputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;base_model.input, outputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;target&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# The next part is the function to maximize the target layer/node by&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# adjusting the input, equivalent to the usual gradient descent but&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# gradient ascent. Run an optimization loop:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;activation &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; None
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;@tf.function&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Decorator to increase the speed of the gradient_ascent function&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    input_signature&lt;span style=&#34;color:#f92672&#34;&gt;=(&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[&lt;/span&gt;None,None,3&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.float32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.int32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf.TensorSpec&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;shape&lt;span style=&#34;color:#f92672&#34;&gt;=[]&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf.float32&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;,&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;def gradient_ascent&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, steps, step_size&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;0.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; n in tf.range&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# As in normal NN training, you want to record the computation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# of the forward-pass (the part_model call below) to compute the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# gradient afterwards. This is what tf.GradientTape does.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        with tf.GradientTape&lt;span style=&#34;color:#f92672&#34;&gt;()&lt;/span&gt; as tape:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            tape.watch&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Forward-pass (compute the activation given our image)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            activation &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; part_model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;tf.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.shape&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# The activation will be of shape (1,N,N,L) where N is related to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# the resolution of the input image (assuming our target layer is&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# a convolutional filter), and L is the size of the layer. E.g. for a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# 256x256 image in &amp;#34;block4_conv1&amp;#34; of VGG19, this will be&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# (1,32,32,512) -- we select one of the 512 nodes (index) and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# average over the rest (you can average selectively to affect&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# only part of the image but there&amp;#39;s not really a point):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.math.reduce_mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activation&lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;:,:,:,target_index&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# Get the gradient, i.e. derivative of &amp;#34;loss&amp;#34; with respect to input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# and normalize.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        gradients &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tape.gradient&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;loss, img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        gradients /&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.math.reduce_std&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;gradients&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#75715e&#34;&gt;# In the final step move the image in the direction of the gradient to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# increate the &amp;#34;loss&amp;#34; (our targeted activation). Note that the sign here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# is opposite to the typical gradient descent (our &amp;#34;loss&amp;#34; is the target &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# activation which we maximize, not something we minimize).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; img + gradients*step_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.clip_by_value&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, -1, 1&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; loss, img
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Preprocessing of the image (converts from [0..255] to [-1..1]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;starting_img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np.random.randint&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0,high&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;255,size&lt;span style=&#34;color:#f92672&#34;&gt;=(&lt;/span&gt;224,224,3&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np.uint8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;starting_img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.convert_to_tensor&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Run the gradient ascent loop&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;loss, img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; gradient_ascent&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;steps&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, tf.constant&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;step_size&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# Convert back to [0..255] and return the new image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.cast&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;255*&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img + 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;/2.0, tf.uint8&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt.imshow&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.array&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;im &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Image.fromarray&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.array&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;im.save&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;node4.png&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;the-confusing-part&#34;&gt;The confusing part
+&lt;/h2&gt;&lt;p&gt;Judging my the &lt;a class=&#34;link&#34; href=&#34;https://microscope.openai.com/models/vgg19_caffe/conv5_4_conv5_4_0/4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;OpenAI Microscope&lt;/a&gt; it looks like the node mostly gets activated by furry animals &amp;ndash; &lt;em&gt;in the training set&lt;/em&gt;. Of course our image in artificial and this far outside the usual distribution, and we can expect such different behaviour. But why do we get the &lt;code&gt;sea_cucumber&lt;/code&gt; prediction, rather than predictions of &lt;code&gt;dog&lt;/code&gt;, &lt;code&gt;bison&lt;/code&gt; or &lt;code&gt;lion&lt;/code&gt;?&lt;/p&gt;
+&lt;p&gt;Feeding this image into the network, it seems insanely sure that the right label is &lt;code&gt;sea_cucumber&lt;/code&gt;. Also other imagenet-trained networks such as Inception or VGG16 give the same result. Note: This was not indended and not optimized for.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg19 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG19&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg19.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.vgg19.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01924916&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flatworm&amp;#39;&lt;/span&gt;, 1.2730256e-33&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01981276&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;king_crab&amp;#39;&lt;/span&gt;, 2.537045e-37&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg16 &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.VGG16&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg16.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg16.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.vgg16.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 1.0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01950731&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_slug&amp;#39;&lt;/span&gt;, 4.6657154e-15&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n01924916&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;flatworm&amp;#39;&lt;/span&gt;, 1.810621e-15&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_resnet &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.ResNet50&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;, include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;True&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.resnet.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;predictions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_resnet.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;print&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Predicted:&amp;#39;&lt;/span&gt;, tf.keras.applications.resnet.decode_predictions&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;predictions, top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;3&lt;span style=&#34;color:#f92672&#34;&gt;)[&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Predicted: &lt;span style=&#34;color:#f92672&#34;&gt;[(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n02321529&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;sea_cucumber&amp;#39;&lt;/span&gt;, 0.9790509&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n12144580&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;corn&amp;#39;&lt;/span&gt;, 0.00899157&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, &lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;n13133613&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;ear&amp;#39;&lt;/span&gt;, 0.005869923&lt;span style=&#34;color:#f92672&#34;&gt;)]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Even this online service (&lt;a class=&#34;link&#34; href=&#34;https://www.snaplogic.com/machine-learning-showcase/image-recognition-inception-v3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;snaplogic using Inception&lt;/a&gt;) mistakes a picture of my phone screen showing the image: &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/recognize.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;recognize&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;investigation&#34;&gt;Investigation
+&lt;/h2&gt;&lt;p&gt;Let&amp;rsquo;s look at the activations, after feeding the image into the VGG19 network I have been using:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;[&lt;/span&gt;model_vgg19.get_layer&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;block5_conv4&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;.output&lt;span style=&#34;color:#f92672&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;model_vgg19_cutoff &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.Model&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;inputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;model_vgg19.input, outputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;target&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;x &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf.keras.applications.vgg19.preprocess_input&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.expand_dims&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;activations &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; model_vgg19_cutoff.predict&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;x&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt.plot&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;np.mean&lt;span style=&#34;color:#f92672&#34;&gt;(&lt;/span&gt;activations, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0&lt;span style=&#34;color:#f92672&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activations.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; So the question we&amp;rsquo;re asking, is this the typical pattern for a dog or bison? Or maybe closer to the &lt;code&gt;sea_cucumber&lt;/code&gt; pattern, in this 512-dimensional space?&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s have a look at the &lt;code&gt;groenendael&lt;/code&gt; (1st image in Microscope) and &lt;code&gt;sea_cucumber&lt;/code&gt; classes, as well as a few randomly selected ones. I downloaded the imagenet data and used &lt;a class=&#34;link&#34; href=&#34;https://image-net.org/challenges/LSVRC/2017/browse-synsets.php&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this list&lt;/a&gt; to find the right files. &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/groenendael.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; Hmm I don&amp;rsquo;t really see a pattern by eye here, nor a similarity to above / excitation in index 4. In hindsight this makes sense, we wouldn&amp;rsquo;t expect the category to be simply 1-hot encoded in activation space, because a) there is not enough room, and b) there are more layers following so I would rather think of some clusters in the high dimensional activation space. Let&amp;rsquo;s maybe look some summary statistic, like the absolute distance in this 512-dim vector space.&lt;/p&gt;
+&lt;p&gt;So I take the training images, feed them into the network and read of the activations of the 512 nodes in the layer we are looking at (averaged over the 14x14 locations). Then I compute the distance as absolute distance between the vectors, 512-dimenisonal L2 norm. The image below shows the distance between the optimized &amp;ldquo;sea_cucumber essence&amp;rdquo; image and the activations of &lt;code&gt;sea_cucumber&lt;/code&gt; training data (green), &lt;code&gt;groenendael&lt;/code&gt; (blue), and a mix of 10 random classes (100 random images each). The blue curve shows the average activation-distance between randomly selected images of different classes. The code for all the following plots can be found in &lt;code&gt;code_distances.py&lt;/code&gt;. &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_node4maximized.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;distances&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;For context, here is the average distance between randomly selected images (grey), images from the same class (red) and images from different classes (blue): &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/activation_distances_general.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; We learn three main things here:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Generally images of the same class seem to be nearer to each other in this 512-dim space than random / different classes, but the effect is not very strong. Of course we wouldn&amp;rsquo;t expect that the distance is the best measure of &amp;ldquo;closeness&amp;rdquo; between activations.&lt;/li&gt;
+&lt;li&gt;These numbers are all waaaay smaller than the ~7k and 36k we get from the &amp;ldquo;sea_cucumber essence&amp;rdquo; image. This tells us (somewhat unsurprisingly) that that optimized image is far outside the training distribution in at least this measure.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;sea_cucumber&lt;/code&gt; training data seems to give activations &lt;em&gt;slightly&lt;/em&gt; closer to the &amp;ldquo;sea_cucumber essence&amp;rdquo; image &amp;ndash; so maybe it&amp;rsquo;s just far outside the distribution but into the &lt;code&gt;sea_cucumber&lt;/code&gt; direction?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Naturally the L2-distance isn&amp;rsquo;t the ideal way to reduce the 512-d space into something plot-able. One method I found is &lt;a class=&#34;link&#34; href=&#34;https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;t-SNE&lt;/a&gt; which projects the 512-dimensions into two parameters which we can plot: &lt;img src=&#34;https://github.com/Stefan-Heimersheim/sea_cucumber_essence/blob/main/tSNE.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt; Looks like we get a nice separation (t-SNE does not know the labels) of different categories, and the &amp;ldquo;sea_cucumber essence&amp;rdquo; activations tend to lie within the &lt;code&gt;sea_cucumber&lt;/code&gt; training data!&lt;/p&gt;
+&lt;p&gt;This doesn&amp;rsquo;t definitely answer the question, but I think it&amp;rsquo;s clear that this node4-maximized image ends up in a corner of parameter space which, even though it is &amp;ldquo;far away&amp;rdquo; (L2 distance), lies in a region that is clearly near the region that &lt;code&gt;sea_cucumber&lt;/code&gt; training images lie in. Presented with this out-of-distribution image, and tasked with choosing between only the existing categories, the network decides for &lt;code&gt;sea_cucumber&lt;/code&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>CNN Feature Visualization</title>
+        <link>http://localhost:1313/post/cnn-feature-viz/</link>
+        <pubDate>Thu, 26 May 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/cnn-feature-viz/</guid>
+        <description>&lt;img src="http://localhost:1313/post/cnn-feature-viz/cover.gif" alt="Featured image of post CNN Feature Visualization" /&gt;&lt;p&gt;&lt;em&gt;Cross-posted on &lt;a class=&#34;link&#34; href=&#34;https://www.lesswrong.com/posts/raRSW3e9iYMwkqjBX/cnn-feature-visualization-in-50-lines-of-code&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;LessWrong&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;To me, reading about &lt;a class=&#34;link&#34; href=&#34;https://distill.pub/2020/circuits/zoom-in/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Feature Visualization&lt;/a&gt; felt like one of the most revealing insights about CNNs in the last years. Seeing the idea &amp;ldquo;this node finds eyes, this node finds mouths, the combination detects faces&amp;rdquo; (oversimplified) actually implemented by the CNN was a pleasant surprise, as in, it suggests we might actually understand how NNs work. There&amp;rsquo;s more reading on the &lt;a class=&#34;link&#34; href=&#34;https://www.eacambridge.org/agi-week-6&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;programme website here&lt;/a&gt;, I can highly recommend the articles by &lt;a class=&#34;link&#34; href=&#34;https://distill.pub/2020/circuits/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Chris Olah&amp;rsquo;s group on distill&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Seeing this I think many of us immediately want to try this, and play around with it. There is of course the OpenAI &lt;a class=&#34;link&#34; href=&#34;https://microscope.openai.com/models&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Microscope&lt;/a&gt; to look at results, and the &lt;a class=&#34;link&#34; href=&#34;https://github.com/tensorflow/lucid&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Lucid&lt;/a&gt; library, but I wanted to actually reproduce the idea myself without relying on a somewhat black box (big library / OpenAI Microscope).&lt;/p&gt;
+&lt;p&gt;Almost all tutorials I found however used Lucid, and this really cool write-up &lt;a class=&#34;link&#34; href=&#34;https://towardsdatascience.com/how-to-visualize-convolutional-features-in-40-lines-of-code-70b7d87b0030&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;&amp;ldquo;How to visualize convolutional features in 40 lines of code&amp;rdquo;&lt;/a&gt; unfortunately starts with &lt;code&gt;from fastai.conv_learner import *&lt;/code&gt;. In retrospective I think I could understand this now, but I didn&amp;rsquo;t, and finding out which parts were fastai functions and what they do was rather tricky. I also didn&amp;rsquo;t manage to install the required (older) version of fastai.&lt;/p&gt;
+&lt;p&gt;So I decided to have a go myself, and, luckily, I found that &amp;ldquo;DeepDream&amp;rdquo; is based a very similar idea and I could adopt most code from &lt;a class=&#34;link&#34; href=&#34;https://www.tensorflow.org/tutorials/generative/deepdream&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this notebook&lt;/a&gt; from Google AI. This isn&amp;rsquo;t actually too complicated, especially broken down to the bare minimum:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A trained network whose features we want to visualize&lt;/li&gt;
+&lt;li&gt;A loop to maximize the activation of a targeted node&lt;/li&gt;
+&lt;li&gt;A few lines to make and show an image.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;The whole code runs in about a minute on my laptop (no GPU).&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The first part is easy, we get the pre-trained network from tensorflow.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; tensorflow &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; tf
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;base_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;keras&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;applications&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;VGG19(include_top&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;False&lt;/span&gt;, weights&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;imagenet&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;The next part in the code (it&amp;rsquo;s mostly comments really), see the comments marked with &lt;code&gt;#&lt;/code&gt; for explanations:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;maximize_activation&lt;/span&gt;(starting_img,\
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        target_layer&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;mixed0&amp;#34;&lt;/span&gt;, target_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,\
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                        steps&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Take the network and cut it off at the layer we want to analyze,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# i.e. we only need the part from the input to the target_layer.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    target &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; [base_model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get_layer(target_layer)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;output]
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    part_model &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;keras&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;Model(inputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;base_model&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;input, outputs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;target)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# The next part is the function to maximize the target layer/node by&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# adjusting the input, equivalent to the usual gradient descent but&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# gradient ascent. Run an optimization loop:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;gradient_ascent&lt;/span&gt;(img, steps, step_size):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;constant(&lt;span style=&#34;color:#ae81ff&#34;&gt;0.0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; n &lt;span style=&#34;color:#f92672&#34;&gt;in&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;range(steps):
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# As in normal NN training, you want to record the computation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# of the forward-pass (the part_model call below) to compute the&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# gradient afterwards. This is what tf.GradientTape does.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#66d9ef&#34;&gt;with&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;GradientTape() &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; tape:
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                tape&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;watch(img)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# Forward-pass (compute the activation given our image)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                activation &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; part_model(tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;expand_dims(img, axis&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# The activation will be of shape (1,N,N,L) where N is related to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# the resolution of the input image (assuming our target layer is&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# a convolutional filter), and L is the size of the layer. E.g. for a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# 256x256 image in &amp;#34;block4_conv1&amp;#34; of VGG19, this will be&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# (1,32,32,512) -- we select one of the 512 nodes (index) and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# average over the rest (you can average selectively to affect&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                &lt;span style=&#34;color:#75715e&#34;&gt;# only part of the image but there&amp;#39;s not really a point):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;                loss &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;math&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduce_mean(activation[:,:,:,target_index])
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# Get the gradient, i.e. derivative of &amp;#34;loss&amp;#34; with respect to input&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# and normalize.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            gradients &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tape&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;gradient(loss, img)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            gradients &lt;span style=&#34;color:#f92672&#34;&gt;/=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;math&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;reduce_std(gradients)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# In the final step move the image in the direction of the gradient to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# increate the &amp;#34;loss&amp;#34; (our targeted activation). Note that the sign here&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# is opposite to the typical gradient descent (our &amp;#34;loss&amp;#34; is the target &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            &lt;span style=&#34;color:#75715e&#34;&gt;# activation which we maximize, not something we minimize).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; img &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; gradients&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;step_size
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;clip_by_value(img, &lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; loss, img
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Preprocessing of the image (converts from [0..255] to [-1..1]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;keras&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;applications&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;inception_v3&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;preprocess_input(starting_img)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;convert_to_tensor(img)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Run the gradient ascent loop&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    loss, img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; gradient_ascent(img, tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;constant(steps), tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;constant(step_size))
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Convert back to [0..255] and return the new image&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;cast(&lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;(img &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1.0&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2.0&lt;/span&gt;, tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;uint8)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; img
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;Finally apply this procedure to a random image:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; numpy &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; np
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; matplotlib.pyplot &lt;span style=&#34;color:#66d9ef&#34;&gt;as&lt;/span&gt; plt
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;starting_img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randint(low&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;,high&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;255&lt;/span&gt;,size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;300&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;), dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;uint8)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;optimized_img &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; maximize_activation(starting_img, target_layer&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;block4_conv1&amp;#34;&lt;/span&gt;, target_index&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;47&lt;/span&gt;, steps&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;, step_size&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0.1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;plt&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;imshow(np&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;array(optimized_img))
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And here we go!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/images/img01.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;generated image&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Looks like features. Now let&amp;rsquo;s try to reproduce one of the OpenAI microscope images, node 4 of layer block4_conv1 &amp;ndash; here is my version:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/images/img02.png?raw=true&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;OpenAI Microscope reproduction&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;And the OpenAI Microscope image:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://oaiggoh.blob.core.windows.net/microscopeprod/2020-07-25/2020-07-25/vgg19_caffe/lucid.feature_vis/_feature_vis/alpha%3DFalse%26negative%3DFalse%26objective%3Dchannel%26op%3Dconv4_1%252Fconv4_1%253A0%26repeat%3D0%26start%3D0%26steps%3D4096%26stop%3D32/channel-4.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;OpenAI Microscope original&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Not identical, but clearly the same feature in both visualizations!&lt;/p&gt;
+&lt;p&gt;Finally here is a run with InceptionV3, just for the pretty pictures, this time starting with a non-random (black) image. And an animation of the image after every iteration.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/raw/main/image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;final image&#34;
+	
+	
+&gt; &lt;img src=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/raw/main/image.gif&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;animation&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Note: There&amp;rsquo;s an &lt;em&gt;optional&lt;/em&gt; bit to improve the speed (by about a factor of 2 on my laptop), just add this decorator in front of the &lt;code&gt;gradient_ascent&lt;/code&gt; function:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;@tf.function&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;# Decorator to increase the speed of the gradient_ascent function&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    input_signature&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;(
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TensorSpec(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;[&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;,&lt;span style=&#34;color:#66d9ef&#34;&gt;None&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;3&lt;/span&gt;], dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;float32),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TensorSpec(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;[], dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;int32),
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;TensorSpec(shape&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;[], dtype&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tf&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;float32),)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;gradient_ascent&lt;/span&gt;(img, steps, step_size): &lt;span style=&#34;color:#f92672&#34;&gt;...&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;This is basically how far I got in the time, the code can be found on my GitHub (&lt;a class=&#34;link&#34; href=&#34;https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/short_version.ipynb&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;link&lt;/a&gt;). But I do plan to look at some more interpretability techniques (maybe something for transformers or RL?) or more general AGI Safety ideas in the future!&lt;/p&gt;
+&lt;p&gt;Feel free to post a comment or send me a message if you have any questions or anything really, happy to chat about these things!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;I just want to thank the organizers of the AGI Safety Fundamentals programme again, for setting up the programme and all their support. I can highly recommend the programme, as well as the well-curated curriculum &lt;a class=&#34;link&#34; href=&#34;https://www.eacambridge.org/technical-alignment-curriculum&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt; if you just want to read through it yourself.&lt;/em&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Fingerprint-based full-disk encryption on linux</title>
+        <link>http://localhost:1313/post/fingerprint-unlock-encryption/</link>
+        <pubDate>Mon, 30 Aug 2021 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/fingerprint-unlock-encryption/</guid>
+        <description>&lt;img src="http://localhost:1313/post/fingerprint-unlock-encryption/cover.png" alt="Featured image of post Fingerprint-based full-disk encryption on linux" /&gt;&lt;p&gt;I encrypt my laptop to have the peace of mind &amp;ndash; if it were to get stolen my data would mostly be safe. It would still be stressfull, a loss of money and a bit of a mess, but at least a thief wouldn&amp;rsquo;t open the laptop and find a bunch of payment information, emails and sensitive information. So far I have used a password, but now that my new laptop has a fingerprint reader I wanted to see if I can use my fingerprint instead.&lt;/p&gt;
+&lt;p&gt;Caveat: Of course fingerprints are much less secure than a password (e.g. it can be stolen from &lt;a class=&#34;link&#34; href=&#34;https://www.bbc.co.uk/news/technology-30623611&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;a photograph&lt;/a&gt;), but its all about defending against the right threat levels (&lt;a class=&#34;link&#34; href=&#34;https://xkcd.com/538/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;relevant xkcd&lt;/a&gt;) and picking low-hanging fruits. So consider this just a convinient way to project your data against simple &amp;ldquo;start the laptop and check&amp;rdquo; or &amp;ldquo;take out the hard drive and look&amp;rdquo; scenarios.&lt;/p&gt;
+&lt;p&gt;So why is this &lt;strong&gt;not&lt;/strong&gt; super easy? Basically you cannot &amp;ldquo;read off&amp;rdquo; an encryption key from a fingerprint, because the reading will look slightly different every time. You can only compare a fingerprint against stored fingerprints and check if they match. The problem now is, where do you put those comparison fingerprints on your laptop? You can&amp;rsquo;t put them into the unencrypted part, then the &amp;ldquo;attacker&amp;rdquo; could simply access and replace them with their own. But you can&amp;rsquo;t simply put them into the encrypted part because you cannot access it before decrypting it.&lt;/p&gt;
+&lt;p&gt;I can think of two solutions here, both invole using and trusting your laptop&amp;rsquo;s UEFI/BIOS software:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Store the hard drive encryption key in the UEFI and configure it so that it requires a fingerprint when the computer starts up (&amp;ldquo;power on password&amp;rdquo;). Assuming the UEFI is secure (which it might not be, but it probably is sufficient for the simple theft model from above), one cannot unlock the UEFI without the fingerprint and cannot unlock the hard drive without the UEFI. Unfortunately &lt;a class=&#34;link&#34; href=&#34;https://support.lenovo.com/gb/en/solutions/ht037692-fingerprint-reader-tips-windows-7-8-thinkpad#replace&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this functionality&lt;/a&gt; seems to be only available via Lenovo&amp;rsquo;s Windows fingerprint sofrware.&lt;/li&gt;
+&lt;li&gt;Store the hard drive encryption key in the UEFI and configure it (via Secure Boot) so that it only boots into a &amp;ldquo;secure&amp;rdquo; operating system (your Linux installation). Then your computer boots the OS and it asks you for your password / fingerprint. The first part means that your computer won&amp;rsquo;t boot (or at least won&amp;rsquo;t give away your hard drive encryption key) if it is not booting your OS. Afterwards your hard drive will actually be decrypted without having checked your fingerprint, but it is running your Linux installation which you have password- or fingerprint-protected.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Of course both methods have their weaknesses, in particular bugs or mistakes in the UEFI could break either method, and bugs in Linux / your login manager break the 2nd option. But again, we&amp;rsquo;re just trying to protect our data from a thief who steals your laptop in the subway and wants to resell it, not a government attack. If you need better security really use a password. PS: If you don&amp;rsquo;t have a fingerprint reader and use a password to login anyway, don&amp;rsquo;t use this method. I would instead recommend a normal password-based disk encryption and autologin on Linux as opposed to automatic decryption and password-based login, to avoid additional points of weakness.&lt;/p&gt;
+&lt;p&gt;So for our method we need 3 steps&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Set up secure boot to only boot the operating system we want.&lt;/li&gt;
+&lt;li&gt;Set up our Trusted Platform Module (TPM) to give out the encryption key if the previous criterion is fulfilled, and decrypt the harddrive.&lt;/li&gt;
+&lt;li&gt;Set up Linux to ask for a fingerprint on login.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;I will walk through my steps below. Keep in mind that this worked for me using the ThinkPad X1 Carbon Generation 9, unfortunately not all UEFI implementations work similar. In particular some very early laptop models had bugs that could brick the UEFI, and many Windows-laptops come pre-encrypted and might or might not unlock after you made changes in the UEFI (in that case I recommend exporting the encryption key or disabling &lt;a class=&#34;link&#34; href=&#34;https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;BitLocker&lt;/a&gt; encryption).&lt;/p&gt;
+&lt;h2 id=&#34;implementation&#34;&gt;Implementation
+&lt;/h2&gt;&lt;h3 id=&#34;secure-boot-setup&#34;&gt;Secure Boot setup
+&lt;/h3&gt;&lt;p&gt;To enable Secure Boot and make boot only our &amp;ldquo;signed&amp;rdquo; operating systems, we first need to sign it. By default most UEFI configurations trust keys from Microsoft, Canonical, various others, and the manufacturer. As we do not have those keys we generate our own keys and add them to the UEFI. I am basically following &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Implementing_Secure_Boot&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this guide&lt;/a&gt; and use &lt;a class=&#34;link&#34; href=&#34;https://www.rodsbooks.com/efi-bootloaders/mkkeys.sh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this script&lt;/a&gt; by &lt;a class=&#34;link&#34; href=&#34;https://www.rodsbooks.com/efi-bootloaders/controlling-sb.html#creatingkeys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rod Smith&lt;/a&gt;. Obviously give that script a read before running code downloaded from the internet! At the time of writing (2021) the script matches with the explanations in the &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Creating_keys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ArchWiki&lt;/a&gt; article and seems to make sense.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -L -O https://www.rodsbooks.com/efi-bootloaders/mkkeys.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chmod +x mkkeys.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;./mkkeys.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then we can use these keys to sign various binaries. Be aware that anything you sign (e.g. debugging images) can boot and obtain your hard drive decryption keys from the UEFI. PS: What is referred to as &amp;ldquo;Common Name&amp;rdquo; is really just a name that you later see e.g. in your UEFI&amp;rsquo;s list of keys, choose something (e.g. your name) to later make it obvious that this is your key and not one of the many pre-installed ones. Here I sign the&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sbsign --key db.key --cert db.crt --output /boot/vmlinuz-linux /boot/vmlinuz-linux
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sbsign --key db.key --cert db.crt --output esp/EFI/BOOT/BOOTx64.EFI esp/EFI/BOOT/BOOTx64.EFI
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Finally we &amp;ldquo;enroll&amp;rdquo; the key to tell it to trust this key. Here are some important caveats:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The encryption software (luks) will check the Platform Configuration Registers (PCRs) before unlocking the drive, to check that Secure Boot is still enabled and no relevant settings have changed. Depending on how your TPM / Secure Boot works, booting images signed with a different key willl produce different PCRs or not. If it does create different PCRs, you do not have to worry about the other (e.g. preinstalled) keys on your laptop. If the PCRs are identical you might want to, if possible, remove preinstalled keys.&lt;/li&gt;
+&lt;li&gt;Warning: I heard of some reports that (a) enrolling your own keys or especially (b) removing the other keys could &amp;ldquo;brick&amp;rdquo; (make unusable) your laptop. As a rule of thumb, this problem mostly affected older early UEFI laptops but I highly recommend to check online first. Also remember the warning about BitLocker above.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I enrolled my &lt;code&gt;db&lt;/code&gt; key (as far as I can see that is the only one needed) by copying it to the (unencrypted, FAT32 formatted) EFI partition of my hard drive (a USB stick probably works too). My UEFI was fine with &lt;code&gt;.auth&lt;/code&gt; or &lt;code&gt;.cer&lt;/code&gt; formats, I used the former as recommended in the &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Unified_Extensible_Firmware_Interface/Secure_Boot#Using_firmware_setup_utility&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ArchWiki&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;mkdir /boot/keys &lt;span style=&#34;color:#f92672&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; cp db.auth /boot/keys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Then I went through the UEFI menu to &amp;ldquo;enroll&amp;rdquo; this new Signature Database (db) key. I did not enroll the Platform Key (PK), Key Exchange Key (KEK) or add a Forbidden Signature Database (dbx), not sure why they would need to be so I left them out for now (maybe if one wanted to update keys without manually going into the UEFI menu).&lt;/p&gt;
+&lt;h3 id=&#34;tpm-20-to-decrypt-disk&#34;&gt;TPM 2.0 to decrypt disk
+&lt;/h3&gt;&lt;p&gt;I encrypted my disk using luks2, set up roughly following &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this ArchWiki guide&lt;/a&gt;. I have one small unencrypted 2 GB partition (&lt;code&gt;nvme0n1p1&lt;/code&gt;) formatted as FAT32 and one large encrypted 1 TB ext4-formatted partition ((&lt;code&gt;nvme0n1p2&lt;/code&gt;)). Now I follow &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Trusted_Platform_Module#Data-at-rest_encryption_with_LUKS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this ArchWiki guide&lt;/a&gt; to add my tpm device as an additional option to unlock the disk (keeping the password as a backup).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;systemd-cryptenroll --tpm2-device&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;auto --tpm2-pcrs&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;0,1,7 /dev/nvme0n1p2
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that I use &lt;code&gt;--tpm2-device=auto&lt;/code&gt; since I have only one tpm device. I use the Platform Configuration Registers (PCRs) 0,1, and 7 to check the UEFI version, UEFI settings, and &amp;ldquo;Secure Boot State&amp;rdquo;, respectively. This basically means the TPM will release the key to decrypt the disk if and only if all these registers contain the correct values. The important one is PCR7 which, &lt;em&gt;in my system,&lt;/em&gt; changes if the booted binary is signed with a different key. You can look at these values using &lt;code&gt;sudo tpm2_pcrread&lt;/code&gt; and observe when they change.&lt;/p&gt;
+&lt;p&gt;I also need to make sure the initramfs has the tools to decrypt this (the &lt;code&gt;sd-encrypt&lt;/code&gt; hook is the relevant one, as well as &lt;code&gt;systemd&lt;/code&gt; and &lt;code&gt;keyboard&lt;/code&gt;).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;HOOKS&lt;span style=&#34;color:#f92672&#34;&gt;=(&lt;/span&gt;base systemd autodetect keyboard modconf block sd-encrypt filesystems fsck&lt;span style=&#34;color:#f92672&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And add the appropriate options to my bootloader. I am using systemd-boot so I added the following line to the config file&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;options rd.luks.name&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;adda8e-62.......a84f&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;cr rd.luks.options&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;adda8e-62.......a84f&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;tpm2-device&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;auto root&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;dev/mapper/cr
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;where the 1st and 3rd part is just the usual encryption setup, the middle part tells luks to check the tpm for a key. The long number is just the UUID of my disk, &lt;code&gt;/dev/nvme0n1p2&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;fingerprint-login-in-linux&#34;&gt;Fingerprint login in Linux
+&lt;/h3&gt;&lt;p&gt;This step is actually quite easy! I spend a long time searching for compatible login managers until realizing I don&amp;rsquo;t need one. You can of course use one if you like.&lt;/p&gt;
+&lt;p&gt;Anyway, back to the &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/fprint&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ArchWiki&lt;/a&gt;. The first step is to install &lt;code&gt;fprintd&lt;/code&gt; and enroll at least one of your fingerprints. Note that for this enroll process, and only for the enroll process, you need a &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/title/Polkit#Authentication_agents&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;authentication agent&lt;/a&gt; running. I usually don&amp;rsquo;t use one (i.e. just use the text-based pre-installed fallback &amp;ldquo;pkttyagent&amp;rdquo;) but for this I installed &lt;code&gt;lxsession-gtk3&lt;/code&gt; (and executed &lt;code&gt;lxsession&lt;/code&gt;). I enrolled two fingers to easily reach my fingerprint reader:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fprintd-enroll
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fprintd-enroll -f right-ring-finger
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;To now use those fingerprints to log in, simply edit &lt;code&gt;/etc/pam.d/system-local-login&lt;/code&gt; and add the line&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;auth      sufficient pam_fprintd.so
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;at the top (note that this might be different for your Linux distribution). I added the same in &lt;code&gt;/etc/pam.d/{sudo,polkit-1}&lt;/code&gt; to authenticate &lt;code&gt;sudo&lt;/code&gt; with a fingerprint, and also answer all those polkit checks (e.g. when you use &amp;ldquo;systemctl&amp;rdquo; to do something) with my fingerprint, and you can find a lost of other programs in that directory as well (from login managers such as sddm and lightdm to xscreensaver and i3lock).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Acknowledgements:&lt;/em&gt; I want to mention that a lot of this was inspired by &lt;a class=&#34;link&#34; href=&#34;https://pawitp.medium.com/full-disk-encryption-on-arch-linux-backed-by-tpm-2-0-c0892cab9704&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this medium post&lt;/a&gt;. I didn&amp;rsquo;t end up using that method but it helped me a lot to see what is possible and what I need. As you probably noticed, I got most of this from various pages in the &lt;a class=&#34;link&#34; href=&#34;https://wiki.archlinux.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ArchWiki&lt;/a&gt; so huge credits to all the volunteers maintaining this. I also owe credit to &lt;a class=&#34;link&#34; href=&#34;https://www.rodsbooks.com/efi-bootloaders/controlling-sb.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Roderick Smith&lt;/a&gt; for the Secure Boot key generation information and script.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Ask an Astronomer</title>
+        <link>http://localhost:1313/post/ask-an-astronomer/</link>
+        <pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/ask-an-astronomer/</guid>
+        <description>&lt;img src="http://localhost:1313/post/ask-an-astronomer/cover.jpg" alt="Featured image of post Ask an Astronomer" /&gt;&lt;p&gt;&lt;strong&gt;Note: This Q&amp;amp;A live stream ran from May to December 2020. You can find the archive, 27 hours of my guests and me answering astronomy questions, in &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CHC3xLEuCSA&amp;amp;list=PLg8xO7lp9qSNC3bSB0vDRGdDnT03efquJ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this playlist&lt;/a&gt;. And there&amp;rsquo;s lots of new content on the &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/@cambridge_astro&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;YouTube channel&lt;/a&gt;!&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;iframe loading=&#34;lazy&#34; 
+            src=&#34;https://www.youtube.com/embed/k4GnKtIDIeQ&#34; 
+            allowfullscreen 
+            title=&#34;YouTube Video&#34;
+    &gt;
+    &lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&#34;what-is-this&#34;&gt;What is this?
+&lt;/h2&gt;&lt;p&gt;On Monday evenings, a colleague and I sit down in front of a camera and chat about astronomy, mostly answering questions from viewers all around the world. I started this project in April 2020 as everybody was suck at home due to the COVID-19 pandemic but we plan to continue various online activities in the future.&lt;/p&gt;
+&lt;p&gt;We answer everything we can about astronomy and physics but also science and life as a researcher in general. Even though we sometimes digress a bit we want to make this accessible to everybody – so ask us anything you want to know or don’t understand. There are no stupid questions!&lt;/p&gt;
+&lt;p&gt;You can find us roughly every second Monday on &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/CambridgeUniversityAstronomy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;YouTube&lt;/a&gt; and &lt;a class=&#34;link&#34; href=&#34;https://www.pscp.tv/AskScience_IoA&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Periscope&lt;/a&gt;. In the meantime, why not take a look at our special stream celebrating the 25th episode &lt;a class=&#34;link&#34; href=&#34;https://youtu.be/aYmqrlVqFu8?t=22&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt; or the most recent (as of 31.12.2020) episode &lt;a class=&#34;link&#34; href=&#34;https://youtu.be/k4GnKtIDIeQ?t=14&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt;! For a cosmology-focused version I can recommend &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=NBAtZqfKF24&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this recording&lt;/a&gt; where we got 10 participants from the Cosmology from Home conference answering questions from YouTube and &lt;a class=&#34;link&#34; href=&#34;https://www.reddit.com/r/askscience/comments/imdw7e/askscience_ama_series_we_are_cosmologists_experts/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Reddit&lt;/a&gt;. We also announce all live streams on &lt;a class=&#34;link&#34; href=&#34;https://twitter.com/AskScience_IoA&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Twitter&lt;/a&gt; so please follow us to receive notifications ;-)&lt;/p&gt;
+&lt;h2 id=&#34;can-i-view-old-live-streams&#34;&gt;Can I view old live streams
+&lt;/h2&gt;&lt;p&gt;Definitively! All our live streams are recorded and uploaded to &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CHC3xLEuCSA&amp;amp;list=PLg8xO7lp9qSNC3bSB0vDRGdDnT03efquJ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;YouTube&lt;/a&gt; and Periscope. Note that the numbering on YouTube and Periscope is slightly different for the first few streams but everything from episode 6 should be consistent.&lt;/p&gt;
+&lt;h2 id=&#34;can-i-participate&#34;&gt;Can I participate?
+&lt;/h2&gt;&lt;p&gt;I’m always looking for participants, just drop me an email and we can arrange something. I&amp;rsquo;m happy to try out new ideas so please do reach out!&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Digging into the Planck likelihood code</title>
+        <link>http://localhost:1313/post/planck-cmd-likelihoods/</link>
+        <pubDate>Fri, 07 Aug 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/planck-cmd-likelihoods/</guid>
+        <description>&lt;img src="http://localhost:1313/post/planck-cmd-likelihoods/cover.png" alt="Featured image of post Digging into the Planck likelihood code" /&gt;&lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Planck_%28spacecraft%29&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Planck spacecraft&lt;/a&gt; is a satellite built to measure the Cosmic Microwave Background, the microwave radiation reaching us from the edge of the observable universe. Its goal is to detect tiny fluctuations (on the scale of 1 part in 100,000) of this radiation from different directions.&lt;br&gt;
+We use these observations to compare out theoretical models to reality. But because those fluctuations are based on randomness (quantum fluctuations in the early universe) we cannot predict the actual pattern on the sky. What we can predict, and test, are certain statistical properties. Most commonly we use the &lt;em&gt;multipoles&lt;/em&gt; (usually referred to as the power spectrum) &amp;ndash; what are those? They describe how correlated or different the radiation in directions looks, e.g. &lt;em&gt;dipole&lt;/em&gt; relating to the correlation of opposite directions. Another way to think of this is the correlation of two directions at a certain (angular) distance. The dipole describes correlation of points 180 degrees apart, quadrupole 90 degrees etc. The 180th moment describes points separated by an angle of just 1 degree and this turns out to be the &amp;ldquo;strongest&amp;rdquo; correlation. In simple terms, we could say the circumstances in the early universe allowed matter and energy to travel such that spots about 40 million light years apart were very correlated.&lt;/p&gt;
+&lt;p&gt;For my work I frequently compute this power spectrum and compare it to the observations of Planck. For most of my work I used the code &lt;a class=&#34;link&#34; href=&#34;https://github.com/CobayaSampler/cobaya&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;cobaya&lt;/a&gt; which automatically performs the calculation internally and returns the likelihood of a set of parameters being compatible with the Planck observations. One day I ran a model which was not included in cobaya, so I had to compute the likelihood myself and found surprisingly little documentation on the likelihood.&lt;br&gt;
+I did some reverse-engineeringreading of the &lt;a class=&#34;link&#34; href=&#34;https://github.com/marius311/cosmoslik&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;cosmoslik wrapper&lt;/a&gt; to find out how it works, and want to write about the results here. But before I continue, if you just want to get the likelihood of a given power spectrum use cosmoslik&amp;rsquo;s &lt;code&gt;cosmoslik.likelihoods&lt;/code&gt; module! Simply pass a dictionary of power spectra and you get the corresponding loglikelihood value.&lt;/p&gt;
+&lt;p&gt;Just out of curiosity though, I wanted to figure out how exactly I can use the Planck likelihoods without any external programs, also to make sure that the wrapper was still functioning. &lt;a class=&#34;link&#34; href=&#34;https://github.com/marius311/cosmoslik/blob/master/cosmoslik_plugins/likelihoods/planck/clik.py&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;cosmoslik&amp;rsquo;s code&lt;/a&gt; turned out to be very helpful and largely what this is based on. So here&amp;rsquo;s my writeup of how to use the clik python code (this is still a wrapper for the C &amp;amp; Fortran code but since it comes together with the likelihood code from the Planck team I won&amp;rsquo;t dig deeper here). Firstly, assuming you have installed the likelihood and sourced the &lt;code&gt;clik_profile&lt;/code&gt; script, you can import the clik python module and load a clik likelihood file:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; clik &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; clik
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lowT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; clik(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;/path/to/baseline/plc_3.0/low_l/commander/commander_dx12_v3_2_29.clik&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Now the function &lt;code&gt;lowT&lt;/code&gt; can be called with a list as argument and returns the likelihood. To figure out which values to put in the list, we use the function &lt;code&gt;lowT.get_lmax()&lt;/code&gt;. The former returns &lt;code&gt;(29, -1, -1, -1, -1, -1)&lt;/code&gt; indicating it requires the TT spectra from l=0 to 29. The list maps to &lt;code&gt;(TT, EE, BB, TE, ?, ?)&lt;/code&gt; where the latter two should be &lt;code&gt;TB&lt;/code&gt; and &lt;code&gt;EB&lt;/code&gt; but I&amp;rsquo;m not sure about the order. Next use &lt;code&gt;lowT.get_extra_parameter_names()&lt;/code&gt; to get the nuisance parameters that need to be appended to the list, in this case &lt;code&gt;(&#39;A_planck&#39;,)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;First let us get the power spectra, e.g. from &lt;a class=&#34;link&#34; href=&#34;https://github.com/lesgourg/class_public&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CLASS&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; classy &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; Class
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cosmo &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Class()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cosmo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;set({&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;output&amp;#39;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tCl pCl lCl&amp;#39;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;lensing&amp;#39;&lt;/span&gt;: &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;yes&amp;#39;&lt;/span&gt;})
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cosmo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;compute()
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Cell &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; cosmo&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;lensed_cl()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that CLASS returns the power spectra in relative units while the likelihoods require absolute units (see Julien Lesgourgues&amp;rsquo;s comment &lt;a class=&#34;link&#34; href=&#34;https://github.com/lesgourg/class_public/issues/322#issuecomment-613941965&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt; for some context), so we convert to uK² by multiplying by the mean CMB temperature squared.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Tcmb &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2.7255&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1e6&lt;/span&gt; &lt;span style=&#34;color:#75715e&#34;&gt;#uK&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;Cl_TT &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; Cell[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;tt&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Tcmb&lt;span style=&#34;color:#f92672&#34;&gt;**&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Also note that we just use the power spectrum C_ell, not the modified version D_ell. The latter is used as input for &lt;code&gt;cosmoslik&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Finally we can call the likelihood with a list of spectra and nuisance parameters:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;A_planck &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1.000442&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;lowT([&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;Cl_TT[:&lt;span style=&#34;color:#ae81ff&#34;&gt;30&lt;/span&gt;], A_planck])
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For something close to bestfit LCDM the result should be around -12.&lt;/p&gt;
+&lt;p&gt;For a more complex example, let&amp;rsquo;s look at the high-l TTTEEE likelihood. &lt;code&gt;highTTTEEE.lmax&lt;/code&gt; shows us we need (2508, 2508, -1, 2508, -1, -1), i.e. the TT, EE and TE spectra, and in that order. &lt;code&gt;highTTTEEE.extra_parameter_names&lt;/code&gt; lists a whopping 47 nuisance parameters which we have to pass in the right order as well. Tipp: You can get those in the right order from a dictionary wit something like &lt;code&gt;nuisance_TTTEEE = [planck_nuisance_array[p] for p in highTTTEEE.extra_parameter_names]&lt;/code&gt;. Finally &lt;code&gt;highTTTEEE(Cl_TT[:2509]+Cl_EE[:2509]+Cl_TE[:2509]+nuisance_TTTEEE)&lt;/code&gt; should return something like -1173, again for LCDM.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="My project for AGI Safety Fundamentals programme (~Oct 2021), reproducing Chris Olah-style feature visualizations.">
+<title>CNN Feature Visualization</title>
+
+<link rel='canonical' href='http://localhost:1313/post/cnn-feature-viz/'>
+
+<link rel="stylesheet" href="/scss/style.min.f281ffb5054b6017cc01f0cdf4feb55cb5dea6541d2978295fb70624bd3fb79c.css"><meta property='og:title' content="CNN Feature Visualization">
+<meta property='og:description' content="My project for AGI Safety Fundamentals programme (~Oct 2021), reproducing Chris Olah-style feature visualizations.">
+<meta property='og:url' content='http://localhost:1313/post/cnn-feature-viz/'>
+<meta property='og:site_name' content='Stefan Heimersheim'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2022-05-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2022-05-26T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/post/cnn-feature-viz/cover.gif' />
+<meta name="twitter:title" content="CNN Feature Visualization">
+<meta name="twitter:description" content="My project for AGI Safety Fundamentals programme (~Oct 2021), reproducing Chris Olah-style feature visualizations."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/post/cnn-feature-viz/cover.gif' />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu12628761305366239463.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Stefan Heimersheim</a></h1>
+            <h2 class="site-description">Mechanistic Interpretability @ Apollo Research.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:stefan@heimersheim.eu'
+                        target="_blank"
+                        title="Email"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-mail"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" /><path d="M3 7l9 6l9 -6" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/Stefan-Heimersheim/'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.lesswrong.com/users/stefan42'
+                        target="_blank"
+                        title="LessWrong"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-north-star"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h18" /><path d="M12 21v-18" /><path d="M7.5 7.5l9 9" /><path d="M7.5 16.5l9 -9" /></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/sheimersheim'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/post/cnn-feature-viz/">
+                <img src="/post/cnn-feature-viz/cover_hu8871676811503629835.gif"
+                        srcset="/post/cnn-feature-viz/cover_hu8871676811503629835.gif 800w, /post/cnn-feature-viz/cover_hu4431654372399791219.gif 1600w"
+                        width="800" 
+                        height="800" 
+                        loading="lazy"
+                        alt="Featured image of post CNN Feature Visualization" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/tutorial/" style="background-color: #4a9d4f; color: #fff;">
+                Tutorial
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/cnn-feature-viz/">CNN Feature Visualization</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            My project for AGI Safety Fundamentals programme (~Oct 2021), reproducing Chris Olah-style feature visualizations.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 26, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><em>Cross-posted on <a class="link" href="https://www.lesswrong.com/posts/raRSW3e9iYMwkqjBX/cnn-feature-visualization-in-50-lines-of-code"  target="_blank" rel="noopener"
+    >LessWrong</a></em></p>
+<p>To me, reading about <a class="link" href="https://distill.pub/2020/circuits/zoom-in/"  target="_blank" rel="noopener"
+    >Feature Visualization</a> felt like one of the most revealing insights about CNNs in the last years. Seeing the idea &ldquo;this node finds eyes, this node finds mouths, the combination detects faces&rdquo; (oversimplified) actually implemented by the CNN was a pleasant surprise, as in, it suggests we might actually understand how NNs work. There&rsquo;s more reading on the <a class="link" href="https://www.eacambridge.org/agi-week-6"  target="_blank" rel="noopener"
+    >programme website here</a>, I can highly recommend the articles by <a class="link" href="https://distill.pub/2020/circuits/"  target="_blank" rel="noopener"
+    >Chris Olah&rsquo;s group on distill</a>.</p>
+<p>Seeing this I think many of us immediately want to try this, and play around with it. There is of course the OpenAI <a class="link" href="https://microscope.openai.com/models"  target="_blank" rel="noopener"
+    >Microscope</a> to look at results, and the <a class="link" href="https://github.com/tensorflow/lucid"  target="_blank" rel="noopener"
+    >Lucid</a> library, but I wanted to actually reproduce the idea myself without relying on a somewhat black box (big library / OpenAI Microscope).</p>
+<p>Almost all tutorials I found however used Lucid, and this really cool write-up <a class="link" href="https://towardsdatascience.com/how-to-visualize-convolutional-features-in-40-lines-of-code-70b7d87b0030"  target="_blank" rel="noopener"
+    >&ldquo;How to visualize convolutional features in 40 lines of code&rdquo;</a> unfortunately starts with <code>from fastai.conv_learner import *</code>. In retrospective I think I could understand this now, but I didn&rsquo;t, and finding out which parts were fastai functions and what they do was rather tricky. I also didn&rsquo;t manage to install the required (older) version of fastai.</p>
+<p>So I decided to have a go myself, and, luckily, I found that &ldquo;DeepDream&rdquo; is based a very similar idea and I could adopt most code from <a class="link" href="https://www.tensorflow.org/tutorials/generative/deepdream"  target="_blank" rel="noopener"
+    >this notebook</a> from Google AI. This isn&rsquo;t actually too complicated, especially broken down to the bare minimum:</p>
+<ol>
+<li>A trained network whose features we want to visualize</li>
+<li>A loop to maximize the activation of a targeted node</li>
+<li>A few lines to make and show an image.</li>
+</ol>
+<p>The whole code runs in about a minute on my laptop (no GPU).</p>
+<ol>
+<li>The first part is easy, we get the pre-trained network from tensorflow.</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> tensorflow <span style="color:#66d9ef">as</span> tf
+</span></span><span style="display:flex;"><span>base_model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>applications<span style="color:#f92672">.</span>VGG19(include_top<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, weights<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;imagenet&#39;</span>)
+</span></span></code></pre></div><ol start="2">
+<li>The next part in the code (it&rsquo;s mostly comments really), see the comments marked with <code>#</code> for explanations:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">maximize_activation</span>(starting_img,\
+</span></span><span style="display:flex;"><span>                        target_layer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;mixed0&#34;</span>, target_index<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,\
+</span></span><span style="display:flex;"><span>                        steps<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, step_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Take the network and cut it off at the layer we want to analyze,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># i.e. we only need the part from the input to the target_layer.</span>
+</span></span><span style="display:flex;"><span>    target <span style="color:#f92672">=</span> [base_model<span style="color:#f92672">.</span>get_layer(target_layer)<span style="color:#f92672">.</span>output]
+</span></span><span style="display:flex;"><span>    part_model <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>Model(inputs<span style="color:#f92672">=</span>base_model<span style="color:#f92672">.</span>input, outputs<span style="color:#f92672">=</span>target)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># The next part is the function to maximize the target layer/node by</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># adjusting the input, equivalent to the usual gradient descent but</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># gradient ascent. Run an optimization loop:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gradient_ascent</span>(img, steps, step_size):
+</span></span><span style="display:flex;"><span>        loss <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>constant(<span style="color:#ae81ff">0.0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> n <span style="color:#f92672">in</span> tf<span style="color:#f92672">.</span>range(steps):
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># As in normal NN training, you want to record the computation</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># of the forward-pass (the part_model call below) to compute the</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># gradient afterwards. This is what tf.GradientTape does.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">with</span> tf<span style="color:#f92672">.</span>GradientTape() <span style="color:#66d9ef">as</span> tape:
+</span></span><span style="display:flex;"><span>                tape<span style="color:#f92672">.</span>watch(img)
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># Forward-pass (compute the activation given our image)</span>
+</span></span><span style="display:flex;"><span>                activation <span style="color:#f92672">=</span> part_model(tf<span style="color:#f92672">.</span>expand_dims(img, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># The activation will be of shape (1,N,N,L) where N is related to</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># the resolution of the input image (assuming our target layer is</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># a convolutional filter), and L is the size of the layer. E.g. for a</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># 256x256 image in &#34;block4_conv1&#34; of VGG19, this will be</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># (1,32,32,512) -- we select one of the 512 nodes (index) and</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># average over the rest (you can average selectively to affect</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e"># only part of the image but there&#39;s not really a point):</span>
+</span></span><span style="display:flex;"><span>                loss <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>math<span style="color:#f92672">.</span>reduce_mean(activation[:,:,:,target_index])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># Get the gradient, i.e. derivative of &#34;loss&#34; with respect to input</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># and normalize.</span>
+</span></span><span style="display:flex;"><span>            gradients <span style="color:#f92672">=</span> tape<span style="color:#f92672">.</span>gradient(loss, img)
+</span></span><span style="display:flex;"><span>            gradients <span style="color:#f92672">/=</span> tf<span style="color:#f92672">.</span>math<span style="color:#f92672">.</span>reduce_std(gradients)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># In the final step move the image in the direction of the gradient to</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># increate the &#34;loss&#34; (our targeted activation). Note that the sign here</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># is opposite to the typical gradient descent (our &#34;loss&#34; is the target </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e"># activation which we maximize, not something we minimize).</span>
+</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> img <span style="color:#f92672">+</span> gradients<span style="color:#f92672">*</span>step_size
+</span></span><span style="display:flex;"><span>            img <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>clip_by_value(img, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> loss, img
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Preprocessing of the image (converts from [0..255] to [-1..1]</span>
+</span></span><span style="display:flex;"><span>    img <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>keras<span style="color:#f92672">.</span>applications<span style="color:#f92672">.</span>inception_v3<span style="color:#f92672">.</span>preprocess_input(starting_img)
+</span></span><span style="display:flex;"><span>    img <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>convert_to_tensor(img)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Run the gradient ascent loop</span>
+</span></span><span style="display:flex;"><span>    loss, img <span style="color:#f92672">=</span> gradient_ascent(img, tf<span style="color:#f92672">.</span>constant(steps), tf<span style="color:#f92672">.</span>constant(step_size))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Convert back to [0..255] and return the new image</span>
+</span></span><span style="display:flex;"><span>    img <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>cast(<span style="color:#ae81ff">255</span><span style="color:#f92672">*</span>(img <span style="color:#f92672">+</span> <span style="color:#ae81ff">1.0</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0</span>, tf<span style="color:#f92672">.</span>uint8)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> img
+</span></span></code></pre></div><ol start="3">
+<li>Finally apply this procedure to a random image:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>starting_img <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(low<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>,high<span style="color:#f92672">=</span><span style="color:#ae81ff">255</span>,size<span style="color:#f92672">=</span>(<span style="color:#ae81ff">300</span>,<span style="color:#ae81ff">300</span>,<span style="color:#ae81ff">3</span>), dtype<span style="color:#f92672">=</span>np<span style="color:#f92672">.</span>uint8)
+</span></span><span style="display:flex;"><span>optimized_img <span style="color:#f92672">=</span> maximize_activation(starting_img, target_layer<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;block4_conv1&#34;</span>, target_index<span style="color:#f92672">=</span><span style="color:#ae81ff">47</span>, steps<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, step_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>)
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>imshow(np<span style="color:#f92672">.</span>array(optimized_img))
+</span></span></code></pre></div><p>And here we go!</p>
+<p><img src="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/images/img01.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="generated image"
+	
+	
+></p>
+<p>Looks like features. Now let&rsquo;s try to reproduce one of the OpenAI microscope images, node 4 of layer block4_conv1 &ndash; here is my version:</p>
+<p><img src="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/images/img02.png?raw=true"
+	
+	
+	
+	loading="lazy"
+	
+		alt="OpenAI Microscope reproduction"
+	
+	
+></p>
+<p>And the OpenAI Microscope image:</p>
+<p><img src="https://oaiggoh.blob.core.windows.net/microscopeprod/2020-07-25/2020-07-25/vgg19_caffe/lucid.feature_vis/_feature_vis/alpha%3DFalse%26negative%3DFalse%26objective%3Dchannel%26op%3Dconv4_1%252Fconv4_1%253A0%26repeat%3D0%26start%3D0%26steps%3D4096%26stop%3D32/channel-4.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="OpenAI Microscope original"
+	
+	
+></p>
+<p>Not identical, but clearly the same feature in both visualizations!</p>
+<p>Finally here is a run with InceptionV3, just for the pretty pictures, this time starting with a non-random (black) image. And an animation of the image after every iteration.</p>
+<p><img src="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/raw/main/image.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="final image"
+	
+	
+> <img src="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/raw/main/image.gif"
+	
+	
+	
+	loading="lazy"
+	
+		alt="animation"
+	
+	
+></p>
+<p>Note: There&rsquo;s an <em>optional</em> bit to improve the speed (by about a factor of 2 on my laptop), just add this decorator in front of the <code>gradient_ascent</code> function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@tf.function</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Decorator to increase the speed of the gradient_ascent function</span>
+</span></span><span style="display:flex;"><span>    input_signature<span style="color:#f92672">=</span>(
+</span></span><span style="display:flex;"><span>        tf<span style="color:#f92672">.</span>TensorSpec(shape<span style="color:#f92672">=</span>[<span style="color:#66d9ef">None</span>,<span style="color:#66d9ef">None</span>,<span style="color:#ae81ff">3</span>], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32),
+</span></span><span style="display:flex;"><span>        tf<span style="color:#f92672">.</span>TensorSpec(shape<span style="color:#f92672">=</span>[], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>int32),
+</span></span><span style="display:flex;"><span>        tf<span style="color:#f92672">.</span>TensorSpec(shape<span style="color:#f92672">=</span>[], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32),)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gradient_ascent</span>(img, steps, step_size): <span style="color:#f92672">...</span>
+</span></span></code></pre></div><hr>
+<p>This is basically how far I got in the time, the code can be found on my GitHub (<a class="link" href="https://github.com/Stefan-Heimersheim/tensorflow-feature-extraction-tutorial/blob/main/short_version.ipynb"  target="_blank" rel="noopener"
+    >link</a>). But I do plan to look at some more interpretability techniques (maybe something for transformers or RL?) or more general AGI Safety ideas in the future!</p>
+<p>Feel free to post a comment or send me a message if you have any questions or anything really, happy to chat about these things!</p>
+<p><em>I just want to thank the organizers of the AGI Safety Fundamentals programme again, for setting up the programme and all their support. I can highly recommend the programme, as well as the well-curated curriculum <a class="link" href="https://www.eacambridge.org/technical-alignment-curriculum"  target="_blank" rel="noopener"
+    >here</a> if you just want to read through it yourself.</em></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 Stefan Heimersheim
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
